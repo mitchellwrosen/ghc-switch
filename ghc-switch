@@ -1,0 +1,168 @@
+#!/bin/bash
+
+set -e
+
+#########################################################################################################
+# GHC
+
+shouldInstallGhc() {
+  if [ ! -d $HOME/.ghc-switch/ghc-$GHCVER ]; then
+    return 0;
+  else
+    return 1;
+  fi
+}
+
+# Download and build a GHC tarball from download.haskell.org into ~/.ghc-switch.
+installGhc() {
+  echo -n "ghc-$GHCVER (log: $GHCLOG): Downloading! "
+  wget https://downloads.haskell.org/~ghc/$GHCVER/ghc-$GHCVER-$GHCID.tar.xz >>$GHCLOG 2>&1
+  echo -n "Unpacking! "
+  tar xf ghc-$GHCVER-$GHCID.tar.xz >>$GHCLOG 2>&1
+  cd ghc-$GHCVER
+  echo -n "Configuring! "
+  ./configure --prefix=$HOME/.ghc-switch/ghc-$GHCVER >>$GHCLOG 2>&1
+  echo -n "Compiling! "
+  make install >>$GHCLOG 2>&1
+  echo "Yay!"
+  cd ..
+}
+
+#########################################################################################################
+# cabal-install
+
+shouldInstallCabal() {
+  if [ ! -f $HOME/.ghc-switch/cabal-$CABALMVER ]; then 
+    return 0; 
+  else
+    return 1;
+  fi
+}
+
+# Download and build a cabal-install tarball from hackage.haskell.org; copy binary to ~/.ghc-switch.
+installCabal() {
+  GHC_BIN=$HOME/.ghc-switch/ghc-$GHCVER/bin/ghc
+  GHC_PKG_BIN=$HOME/.ghc-switch/ghc-$GHCVER/bin/ghc-pkg
+  HADDOCK_BIN=$HOME/.ghc-switch/ghc-$GHCVER/bin/haddock
+
+  echo -n "cabal-$CABALMVER (log: $CABALLOG): Downloading! "
+  wget https://hackage.haskell.org/package/cabal-install-$CABALVER/cabal-install-$CABALVER.tar.gz >>$CABALLOG 2>&1
+  echo -n "Unpacking! "
+  tar xf cabal-install-$CABALVER.tar.gz >>$CABALLOG 2>&1
+  cd cabal-install-$CABALVER
+  (
+    export EXTRA_CONFIGURE_OPTS="";
+    export GHC=$GHC_BIN;
+    export GHC_PKG=$GHC_PKG_BIN;
+    export HADDOCK=$HADDOCK_BIN;
+    echo -n "Compiling! "
+    ./bootstrap.sh -j --sandbox >>$CABALLOG 2>&1
+  )
+  mv .cabal-sandbox/bin/cabal $HOME/.ghc-switch/cabal-$CABALMVER
+  echo "Yay!"
+  cd ..
+}
+
+#########################################################################################################
+# Main
+
+function printUsage() {
+  echo "Usage: ghc-switch VERSION"
+  echo ""
+  echo "ghc-switch switches between versions of ghc, its friends, and cabal-install"
+  echo "(its acquaintance). Build artifacts are located in ~/.ghc-switch, and "
+  echo "binaries are symlinked in ~/.local/bin, which should be on your PATH."
+}
+
+if [ -z "$1" ]; then
+  printUsage
+  exit 1
+fi
+
+if [ "$1" == "--help" ]; then
+  printUsage
+  exit 0
+fi
+
+GHCVER=$1
+CABALVER=""
+CABALMVER=""
+GHCID=""
+
+case "$GHCVER" in
+  "8.2.2")
+    CABALVER="2.0.0.1"
+    CABALMVER="2.0"
+    ;;
+  "8.0.2")
+    CABALVER="1.24.0.2"
+    CABALMVER="1.24"
+    ;;
+  *)
+    echo "Unknown GHC version $GHCVER"
+    exit 1
+    ;;
+esac
+
+GHCLOG=$HOME/.ghc-switch/logs/ghc-$GHCVER
+CABALLOG=$HOME/.ghc-switch/logs/cabal-$CABALMVER
+
+case $(uname -s) in
+  "Linux")
+    case $(uname -m) in
+      "x86_64")
+        if [ -f /etc/arch-release ]; then
+          case "$GHCVER" in
+            "8.0.2") GHCID="x86_64-deb8-linux" ;;
+            "8.2.2") GHCID="x86_64-unknown-linux" ;;
+            *) exit 1 ;;
+          esac
+        else
+          echo "Unknown distribution"
+          exit 1
+        fi
+        ;;
+      *)
+        echo "Unknown machine $(uname -m)"
+        exit 1
+        ;;
+    esac
+    ;;
+  *)
+    echo "Unknown kernel $(uname -s)"
+    exit 1
+    ;;
+esac
+
+mkdir -p $HOME/.ghc-switch/logs
+
+if shouldInstallGhc || shouldInstallCabal; then
+  TEMPDIR=$(mktemp -d)
+  cd $TEMPDIR
+
+  # Register an EXIT handler informing the user where we downloaded temporary files. Don't rm -rf on 
+  # their behalf, ain't nobody want a lawsuit.
+  function cleanup {
+    echo "(I made a poop in $TEMPDIR, please clean it up.)"
+  }
+  trap cleanup EXIT
+
+  if shouldInstallGhc; then
+    installGhc
+  fi
+
+  if shouldInstallCabal; then
+    installCabal
+  fi
+fi
+
+ln -s -f $HOME/.ghc-switch/ghc-$GHCVER/bin/ghc-$GHCVER $HOME/.local/bin/ghc
+ln -s -f $HOME/.ghc-switch/ghc-$GHCVER/bin/ghci-$GHCVER $HOME/.local/bin/ghci
+ln -s -f $HOME/.ghc-switch/ghc-$GHCVER/bin/ghc-pkg-$GHCVER $HOME/.local/bin/ghc-pkg
+ln -s -f $HOME/.ghc-switch/ghc-$GHCVER/bin/haddock-ghc-$GHCVER $HOME/.local/bin/haddock
+ln -s -f $HOME/.ghc-switch/ghc-$GHCVER/bin/hp2ps $HOME/.local/bin/hp2ps
+ln -s -f $HOME/.ghc-switch/ghc-$GHCVER/bin/hpc $HOME/.local/bin/hpc
+ln -s -f $HOME/.ghc-switch/ghc-$GHCVER/bin/hsc2hs $HOME/.local/bin/hsc2hs
+ln -s -f $HOME/.ghc-switch/ghc-$GHCVER/bin/runghc-$GHCVER $HOME/.local/bin/runghc
+ln -s -f $HOME/.ghc-switch/ghc-$GHCVER/bin/runghc-$GHCVER $HOME/.local/bin/runhaskell
+ln -s -f $HOME/.ghc-switch/cabal-$CABALMVER $HOME/.local/bin/cabal
