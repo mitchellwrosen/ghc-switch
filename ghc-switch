@@ -1,8 +1,6 @@
 #!/bin/bash
 
-set -e
-
-#########################################################################################################
+################################################################################
 # GHC
 
 shouldInstallGhc() {
@@ -15,39 +13,41 @@ shouldInstallGhc() {
 
 # Download and build a GHC tarball from download.haskell.org into ~/.ghc-switch.
 installGhc() {
-  echo -n "ghc-$GHCVER (log: $GHCLOG): Downloading! "
-  wget https://downloads.haskell.org/~ghc/$GHCVER/ghc-$GHCVER-$GHCID.tar.xz >>$GHCLOG 2>&1
-  echo -n "Unpacking! "
-  tar xf ghc-$GHCVER-$GHCID.tar.xz >>$GHCLOG 2>&1
+  echo -n "ghc-$GHCVER: downloading... "
+  wget https://downloads.haskell.org/~ghc/$GHCVER/$GHCTARBALL >>$GHCLOG 2>&1
+  echo -en "\033[15Dunpacking...  \033[1D"
+  tar xf $GHCTARBALL >>$GHCLOG 2>&1
   cd ghc-$GHCVER
-  echo -n "Configuring! "
+  echo -en "\033[13Dconfiguring... "
   ./configure --prefix=$HOME/.ghc-switch/ghc-$GHCVER >>$GHCLOG 2>&1
-  echo -n "Compiling! "
+  echo -en "\033[15Dcompiling...  \033[1D"
+  ./configure --prefix=$HOME/.ghc-switch/ghc-$GHCVER >>$GHCLOG 2>&1
   make install >>$GHCLOG 2>&1
-  echo "Yay!"
+  echo -e "\033[13Dinstalled to $HOME/.ghc-switch/ghc-$GHCVER"
   cd ..
 }
 
-#########################################################################################################
+################################################################################
 # cabal-install
 
 shouldInstallCabal() {
-  if [ ! -f $HOME/.ghc-switch/cabal-$CABALMVER ]; then 
-    return 0; 
+  if [ ! -f $HOME/.ghc-switch/cabal-$CABALMVER ]; then
+    return 0;
   else
     return 1;
   fi
 }
 
-# Download and build a cabal-install tarball from hackage.haskell.org; copy binary to ~/.ghc-switch.
+# Download and build a cabal-install tarball from hackage.haskell.org; copy
+# binary to ~/.ghc-switch.
 installCabal() {
   GHC_BIN=$HOME/.ghc-switch/ghc-$GHCVER/bin/ghc
   GHC_PKG_BIN=$HOME/.ghc-switch/ghc-$GHCVER/bin/ghc-pkg
   HADDOCK_BIN=$HOME/.ghc-switch/ghc-$GHCVER/bin/haddock
 
-  echo -n "cabal-$CABALMVER (log: $CABALLOG): Downloading! "
+  echo -n "cabal-$CABALMVER: downloading... "
   wget https://hackage.haskell.org/package/cabal-install-$CABALVER/cabal-install-$CABALVER.tar.gz >>$CABALLOG 2>&1
-  echo -n "Unpacking! "
+  echo -en "\033[15Dunpacking...  \033[1D"
   tar xf cabal-install-$CABALVER.tar.gz >>$CABALLOG 2>&1
   cd cabal-install-$CABALVER
   (
@@ -55,15 +55,15 @@ installCabal() {
     export GHC=$GHC_BIN;
     export GHC_PKG=$GHC_PKG_BIN;
     export HADDOCK=$HADDOCK_BIN;
-    echo -n "Compiling! "
+    echo -en "\033[13Dcompiling... "
     ./bootstrap.sh -j --sandbox >>$CABALLOG 2>&1
   )
   mv .cabal-sandbox/bin/cabal $HOME/.ghc-switch/cabal-$CABALMVER
-  echo "Yay!"
+  echo -e "\033[13Dinstalled to $HOME/.ghc-switch/cabal-$CABALMVER"
   cd ..
 }
 
-#########################################################################################################
+################################################################################
 # Main
 
 function printUsage() {
@@ -84,19 +84,26 @@ if [ "$1" == "--help" ]; then
   exit 0
 fi
 
+command -v dialog >/dev/null || { echo >&2 "dialog not found"; exit 1; }
+command -v ln     >/dev/null || { echo >&2 "ln not found";     exit 1; }
+command -v make   >/dev/null || { echo >&2 "make not found";   exit 1; }
+command -v tar    >/dev/null || { echo >&2 "tar not found";    exit 1; }
+command -v wget   >/dev/null || { echo >&2 "wget not found";   exit 1; }
+
 GHCVER=$1
-CABALVER=""
-CABALMVER=""
-GHCID=""
 
 case "$GHCVER" in
   "8.2.2")
     CABALVER="2.0.0.1"
-    CABALMVER="2.0"
+    CABALMVER="2.0.1"
+    ;;
+  "8.2.1")
+    CABALVER="2.0.0.0"
+    CABALMVER="2.0.0"
     ;;
   "8.0.2")
     CABALVER="1.24.0.2"
-    CABALMVER="1.24"
+    CABALMVER="1.24.2"
     ;;
   *)
     echo "Unknown GHC version $GHCVER"
@@ -104,56 +111,144 @@ case "$GHCVER" in
     ;;
 esac
 
-GHCLOG=$HOME/.ghc-switch/logs/ghc-$GHCVER
-CABALLOG=$HOME/.ghc-switch/logs/cabal-$CABALMVER
+GHCLOG=$HOME/.ghc-switch/ghc-$GHCVER.log
+CABALLOG=$HOME/.ghc-switch/cabal-$CABALMVER.log
 
-case $(uname -s) in
-  "Linux")
-    case $(uname -m) in
-      "x86_64")
-        if [ -f /etc/arch-release ]; then
-          case "$GHCVER" in
-            "8.0.2") GHCID="x86_64-deb8-linux" ;;
-            "8.2.2") GHCID="x86_64-unknown-linux" ;;
-            *) exit 1 ;;
-          esac
-        else
-          echo "Unknown distribution"
-          exit 1
-        fi
-        ;;
-      *)
-        echo "Unknown machine $(uname -m)"
-        exit 1
-        ;;
-    esac
-    ;;
-  *)
-    echo "Unknown kernel $(uname -s)"
-    exit 1
-    ;;
-esac
+if shouldInstallGhc; then
+  case "$GHCVER" in
+    "8.2.2")
+      OPTIONS=(
+        "ghc-8.2.2-aarch64-deb8-linux.tar.xz" ""
+        "ghc-8.2.2-armv7-deb8-linux.tar.xz" ""
+        "ghc-8.2.2-i386-deb7-linux.tar.xz" ""
+        "ghc-8.2.2-i386-deb8-linux.tar.xz" ""
+        "ghc-8.2.2-i386-unknown-mingw32.tar.xz" ""
+        "ghc-8.2.2-powerpc-ibm-aix7.1.0.0.tar.xz" ""
+        "ghc-8.2.2-src.tar.xz" ""
+        "ghc-8.2.2-windows-extra-src.tar.xz" ""
+        "ghc-8.2.2-x86_64-apple-darwin.tar.xz" ""
+        "ghc-8.2.2-x86_64-centos67-linux.tar.xz" ""
+        "ghc-8.2.2-x86_64-deb7-linux.tar.xz" ""
+        "ghc-8.2.2-x86_64-deb8-linux-dwarf.tar.xz" ""
+        "ghc-8.2.2-x86_64-deb8-linux.tar.xz" ""
+        "ghc-8.2.2-x86_64-portbld10_3-freebsd.tar.xz" ""
+        "ghc-8.2.2-x86_64-portbld11-freebsd.tar.xz" ""
+        "ghc-8.2.2-x86_64-unknown-linux.tar.xz" ""
+        "ghc-8.2.2-x86_64-unknown-mingw32.tar.xz" ""
+      )
+      GHCTARBALL=$(dialog --stdout --menu "Download GHC bindist" 0 0 17 "${OPTIONS[@]}")
+      if [ $? -ne 0 ]; then
+        clear
+        exit 0
+      fi
+      clear
+      ;;
+    "8.2.1")
+      OPTIONS=(
+        "ghc-8.2.1-aarch64-deb8-linux.tar.xz" ""
+        "ghc-8.2.1-armv7-deb8-linux.tar.xz" ""
+        "ghc-8.2.1-i386-deb7-linux.tar.xz" ""
+        "ghc-8.2.1-i386-deb8-linux.tar.xz" ""
+        "ghc-8.2.1-i386-unknown-mingw32.tar.xz" ""
+        "ghc-8.2.1-src.tar.xz" ""
+        "ghc-8.2.1-windows-extra-src.tar.xz" ""
+        "ghc-8.2.1-x86_64-apple-darwin.tar.xz" ""
+        "ghc-8.2.1-x86_64-centos67-linux.tar.xz" ""
+        "ghc-8.2.1-x86_64-deb7-linux.tar.xz" ""
+        "ghc-8.2.1-x86_64-deb8-linux-dwarf.tar.xz" ""
+        "ghc-8.2.1-x86_64-deb8-linux.tar.xz" ""
+        "ghc-8.2.1-x86_64-openbsd60-openbsd.tar.xz" ""
+        "ghc-8.2.1-x86_64-openbsd61-openbsd.tar.xz" ""
+        "ghc-8.2.1-x86_64-portbld10_3-freebsd.tar.xz" ""
+        "ghc-8.2.1-x86_64-portbld11-freebsd.tar.xz" ""
+        "ghc-8.2.1-x86_64-unknown-mingw32.tar.xz" ""
+      )
+      GHCTARBALL=$(dialog --stdout --menu "Download GHC bindist" 0 0 17 "${OPTIONS[@]}")
+      if [ $? -ne 0 ]; then
+        clear
+        exit 0
+      fi
+      clear
+      ;;
+    "8.0.2")
+      OPTIONS=(
+        "ghc-8.0.2-armv7-deb8-linux.tar.xz" ""
+        "ghc-8.0.2-i386-centos67-linux.tar.xz" ""
+        "ghc-8.0.2-i386-deb7-linux.tar.xz" ""
+        "ghc-8.0.2-i386-deb8-linux.tar.xz" ""
+        "ghc-8.0.2-i386-portbld-freebsd.tar.xz" ""
+        "ghc-8.0.2-i386-unknown-mingw32-win10.tar.xz" ""
+        "ghc-8.0.2-i386-unknown-mingw32.tar.xz" ""
+        "ghc-8.0.2-i386-unknown-solaris2.tar.xz" ""
+        "ghc-8.0.2-powerpc-ibm-aix7.1.0.0.tar.xz" ""
+        "ghc-8.0.2-src.tar.xz" ""
+        "ghc-8.0.2-windows-extra-src.tar.xz" ""
+        "ghc-8.0.2-x86_64-apple-darwin.tar.xz" ""
+        "ghc-8.0.2-x86_64-centos67-linux.tar.xz" ""
+        "ghc-8.0.2-x86_64-deb7-linux.tar.xz" ""
+        "ghc-8.0.2-x86_64-deb8-linux.tar.xz" ""
+        "ghc-8.0.2-x86_64-portbld-freebsd.tar.xz" ""
+        "ghc-8.0.2-x86_64-unknown-mingw32-win10.tar.xz" ""
+        "ghc-8.0.2-x86_64-unknown-mingw32.tar.xz" ""
+        "ghc-8.0.2-x86_64-unknown-openbsd.tar.xz" ""
+      )
+      GHCTARBALL=$(dialog --stdout --menu "Download GHC bindist" 0 0 19 "${OPTIONS[@]}")
+      if [ $? -ne 0 ]; then
+        clear
+        exit 0
+      fi
+      clear
+      ;;
+    *)
+      exit 1
+      ;;
+  esac
+fi
 
-mkdir -p $HOME/.ghc-switch/logs
+set -e
 
 if shouldInstallGhc || shouldInstallCabal; then
   TEMPDIR=$(mktemp -d)
   cd $TEMPDIR
 
-  # Register an EXIT handler informing the user where we downloaded temporary files. Don't rm -rf on 
-  # their behalf, ain't nobody want a lawsuit.
+  # Register an EXIT handler informing the user where we downloaded temporary
+  # files. Don't rm -rf on their behalf, ain't nobody want a lawsuit.
   function cleanup {
-    echo "(I made a poop in $TEMPDIR, please clean it up.)"
+    case "$INSTALLING" in
+      "GHC")
+        echo ""
+        echo "Blarg, I am ded. Please check the log: $GHCLOG"
+        echo "(Also, I made a poop in $TEMPDIR, please clean it up.)"
+        rm -r -I $TEMPDIR
+        ;;
+      "CABAL")
+        echo ""
+        echo "Blarg, I am ded. Please check the log: $CABALLOG"
+        echo "(Also, I made a poop in $TEMPDIR, please clean it up.)"
+        rm -f $GHCLOG
+        rm -r -I $TEMPDIR
+        ;;
+      *)
+        rm -f $GHCLOG
+        rm -f $CABALLOG
+        echo "(I made a poop in $TEMPDIR, please clean it up.)"
+        rm -r -I $TEMPDIR
+        ;;
+    esac
   }
   trap cleanup EXIT
 
   if shouldInstallGhc; then
+    INSTALLING="GHC"
     installGhc
   fi
 
   if shouldInstallCabal; then
+    INSTALLING="CABAL"
     installCabal
   fi
+
+  INSTALLING=""
 fi
 
 ln -s -f $HOME/.ghc-switch/ghc-$GHCVER/bin/ghc-$GHCVER $HOME/.local/bin/ghc

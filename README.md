@@ -2,9 +2,9 @@
 
 `ghc-switch` manages the installation of multiple versions of `ghc` and related binaries. Specifically, it:
 
-- Downloads, configures, and installs (if necessary) a pre-built GHC tarball from `downloads.haskell.org`.
-- Downloads, configures, and installs (if necessary) a compatible version of `cabal-install` from `hackage.haskell.org`.
-- Creates symlinks in `~/.local/bin` as necessary.
+- Downloads, configures, and installs (if necessary) a pre-built GHC tarball from `downloads.haskell.org` into `~/.ghc-switch/`.
+- Downloads, configures, and installs (if necessary) a compatible version of `cabal-install` from `hackage.haskell.org` into `~/.ghc-switch/`.
+- Creates symlinks in `~/.local/bin/` as necessary.
 
 ---
 
@@ -32,7 +32,7 @@ $ ghc --version
 The Glorious Glasgow Haskell Compilation System, version 8.0.2
 $ cabal --version
 cabal-install version 1.24.0.2
-compiled using version 1.24.2.0 of the Cabal library 
+compiled using version 1.24.2.0 of the Cabal library
 ```
 
 Here is the full list of executable programs that (may) change when switching between versions of `ghc`:
@@ -46,15 +46,3 @@ Here is the full list of executable programs that (may) change when switching be
 - `hpc`
 - `hsc2hs`
 - `runghc`
-
----
-
-### `ghc-switch` doesn't work on my machine
-
-As far as how `ghc-switch` figures out what tarballs to download, well, that part is woefully inadequate. I only own one flavor of dogfood, after all. If `ghc-switch` does not work for you out-of-the-box, please open an issue or pull request.
-
----
-
-### Your bash is bad
-
-That's because bash is bad.
