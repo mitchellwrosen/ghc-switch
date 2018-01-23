@@ -4,7 +4,7 @@
 # GHC
 
 shouldInstallGhc() {
-  if [ ! -d $HOME/.ghc-switch/ghc-$GHCVER ]; then
+  if [ ! -d "$HOME"/.ghc-switch/ghc-"$GHCVER" ]; then
     return 0;
   else
     return 1;
@@ -14,15 +14,15 @@ shouldInstallGhc() {
 # Download and build a GHC tarball from download.haskell.org into ~/.ghc-switch.
 installGhc() {
   echo -n "ghc-$GHCVER: downloading... "
-  wget https://downloads.haskell.org/~ghc/$GHCVER/$GHCTARBALL >>$GHCLOG 2>&1
+  wget https://downloads.haskell.org/~ghc/"$GHCVER"/"$GHCTARBALL" >>"$GHCLOG" 2>&1
   echo -en "\033[15Dunpacking...  \033[1D"
-  tar xf $GHCTARBALL >>$GHCLOG 2>&1
-  cd ghc-$GHCVER
+  tar xf "$GHCTARBALL" >>"$GHCLOG" 2>&1
+  cd ghc-"$GHCVER"
   echo -en "\033[13Dconfiguring... "
-  ./configure --prefix=$HOME/.ghc-switch/ghc-$GHCVER >>$GHCLOG 2>&1
+  ./configure --prefix="$HOME"/.ghc-switch/ghc-"$GHCVER" >>"$GHCLOG" 2>&1
   echo -en "\033[15Dcompiling...  \033[1D"
-  ./configure --prefix=$HOME/.ghc-switch/ghc-$GHCVER >>$GHCLOG 2>&1
-  make install >>$GHCLOG 2>&1
+  ./configure --prefix="$HOME"/.ghc-switch/ghc-"$GHCVER" >>"$GHCLOG" 2>&1
+  make install >>"$GHCLOG" 2>&1
   echo -e "\033[13Dinstalled to $HOME/.ghc-switch/ghc-$GHCVER"
   cd ..
 }
@@ -31,7 +31,7 @@ installGhc() {
 # cabal-install
 
 shouldInstallCabal() {
-  if [ ! -f $HOME/.ghc-switch/cabal-$CABALMVER ]; then
+  if [ ! -f "$HOME"/.ghc-switch/cabal-"$CABALMVER" ]; then
     return 0;
   else
     return 1;
@@ -41,24 +41,24 @@ shouldInstallCabal() {
 # Download and build a cabal-install tarball from hackage.haskell.org; copy
 # binary to ~/.ghc-switch.
 installCabal() {
-  GHC_BIN=$HOME/.ghc-switch/ghc-$GHCVER/bin/ghc
-  GHC_PKG_BIN=$HOME/.ghc-switch/ghc-$GHCVER/bin/ghc-pkg
-  HADDOCK_BIN=$HOME/.ghc-switch/ghc-$GHCVER/bin/haddock
+  GHC_BIN="$HOME"/.ghc-switch/ghc-"$GHCVER"/bin/ghc
+  GHC_PKG_BIN="$HOME"/.ghc-switch/ghc-"$GHCVER"/bin/ghc-pkg
+  HADDOCK_BIN="$HOME"/.ghc-switch/ghc-"$GHCVER"/bin/haddock
 
   echo -n "cabal-$CABALMVER: downloading... "
-  wget https://hackage.haskell.org/package/cabal-install-$CABALVER/cabal-install-$CABALVER.tar.gz >>$CABALLOG 2>&1
+  wget https://hackage.haskell.org/package/cabal-install-"$CABALVER"/cabal-install-"$CABALVER".tar.gz >>"$CABALLOG" 2>&1
   echo -en "\033[15Dunpacking...  \033[1D"
-  tar xf cabal-install-$CABALVER.tar.gz >>$CABALLOG 2>&1
-  cd cabal-install-$CABALVER
+  tar xf cabal-install-"$CABALVER".tar.gz >>"$CABALLOG" 2>&1
+  cd cabal-install-"$CABALVER"
   (
     export EXTRA_CONFIGURE_OPTS="";
-    export GHC=$GHC_BIN;
-    export GHC_PKG=$GHC_PKG_BIN;
-    export HADDOCK=$HADDOCK_BIN;
+    export GHC="$GHC_BIN";
+    export GHC_PKG="$GHC_PKG_BIN";
+    export HADDOCK="$HADDOCK_BIN";
     echo -en "\033[13Dcompiling... "
-    ./bootstrap.sh -j --sandbox >>$CABALLOG 2>&1
+    ./bootstrap.sh -j --sandbox >>"$CABALLOG" 2>&1
   )
-  mv .cabal-sandbox/bin/cabal $HOME/.ghc-switch/cabal-$CABALMVER
+  mv .cabal-sandbox/bin/cabal "$HOME"/.ghc-switch/cabal-"$CABALMVER"
   echo -e "\033[13Dinstalled to $HOME/.ghc-switch/cabal-$CABALMVER"
   cd ..
 }
@@ -106,7 +106,7 @@ case "$GHCVER" in
     CABALMVER="1.24.2"
     ;;
   *)
-    echo "Unknown GHC version $GHCVER"
+    echo "$GHCVER ∉ {8.0.2, 8.2.1, 8.2.2}"
     exit 1
     ;;
 esac
@@ -209,7 +209,7 @@ set -e
 
 if shouldInstallGhc || shouldInstallCabal; then
   TEMPDIR=$(mktemp -d)
-  cd $TEMPDIR
+  cd "$TEMPDIR"
 
   # Register an EXIT handler informing the user where we downloaded temporary
   # files. Don't rm -rf on their behalf, ain't nobody want a lawsuit.
@@ -218,21 +218,16 @@ if shouldInstallGhc || shouldInstallCabal; then
       "GHC")
         echo ""
         echo "Blarg, I am ded. Please check the log: $GHCLOG"
-        echo "(Also, I made a poop in $TEMPDIR, please clean it up.)"
-        rm -r -I $TEMPDIR
         ;;
       "CABAL")
         echo ""
         echo "Blarg, I am ded. Please check the log: $CABALLOG"
-        echo "(Also, I made a poop in $TEMPDIR, please clean it up.)"
-        rm -f $GHCLOG
-        rm -r -I $TEMPDIR
+        rm -f "$GHCLOG"
         ;;
       *)
-        rm -f $GHCLOG
-        rm -f $CABALLOG
-        echo "(I made a poop in $TEMPDIR, please clean it up.)"
-        rm -r -I $TEMPDIR
+        rm -f "$GHCLOG"
+        rm -f "$CABALLOG"
+        rm -rf -I "$TEMPDIR"
         ;;
     esac
   }
@@ -251,13 +246,13 @@ if shouldInstallGhc || shouldInstallCabal; then
   INSTALLING=""
 fi
 
-ln -s -f $HOME/.ghc-switch/ghc-$GHCVER/bin/ghc-$GHCVER $HOME/.local/bin/ghc
-ln -s -f $HOME/.ghc-switch/ghc-$GHCVER/bin/ghci-$GHCVER $HOME/.local/bin/ghci
-ln -s -f $HOME/.ghc-switch/ghc-$GHCVER/bin/ghc-pkg-$GHCVER $HOME/.local/bin/ghc-pkg
-ln -s -f $HOME/.ghc-switch/ghc-$GHCVER/bin/haddock-ghc-$GHCVER $HOME/.local/bin/haddock
-ln -s -f $HOME/.ghc-switch/ghc-$GHCVER/bin/hp2ps $HOME/.local/bin/hp2ps
-ln -s -f $HOME/.ghc-switch/ghc-$GHCVER/bin/hpc $HOME/.local/bin/hpc
-ln -s -f $HOME/.ghc-switch/ghc-$GHCVER/bin/hsc2hs $HOME/.local/bin/hsc2hs
-ln -s -f $HOME/.ghc-switch/ghc-$GHCVER/bin/runghc-$GHCVER $HOME/.local/bin/runghc
-ln -s -f $HOME/.ghc-switch/ghc-$GHCVER/bin/runghc-$GHCVER $HOME/.local/bin/runhaskell
-ln -s -f $HOME/.ghc-switch/cabal-$CABALMVER $HOME/.local/bin/cabal
+ln -s -f "$HOME"/.ghc-switch/ghc-"$GHCVER"/bin/ghc-"$GHCVER" "$HOME"/.local/bin/ghc
+ln -s -f "$HOME"/.ghc-switch/ghc-"$GHCVER"/bin/ghci-"$GHCVER" "$HOME"/.local/bin/ghci
+ln -s -f "$HOME"/.ghc-switch/ghc-"$GHCVER"/bin/ghc-pkg-"$GHCVER" "$HOME"/.local/bin/ghc-pkg
+ln -s -f "$HOME"/.ghc-switch/ghc-"$GHCVER"/bin/haddock-ghc-"$GHCVER" "$HOME"/.local/bin/haddock
+ln -s -f "$HOME"/.ghc-switch/ghc-"$GHCVER"/bin/hp2ps "$HOME"/.local/bin/hp2ps
+ln -s -f "$HOME"/.ghc-switch/ghc-"$GHCVER"/bin/hpc "$HOME"/.local/bin/hpc
+ln -s -f "$HOME"/.ghc-switch/ghc-"$GHCVER"/bin/hsc2hs "$HOME"/.local/bin/hsc2hs
+ln -s -f "$HOME"/.ghc-switch/ghc-"$GHCVER"/bin/runghc-"$GHCVER" "$HOME"/.local/bin/runghc
+ln -s -f "$HOME"/.ghc-switch/ghc-"$GHCVER"/bin/runghc-"$GHCVER" "$HOME"/.local/bin/runhaskell
+ln -s -f "$HOME"/.ghc-switch/cabal-"$CABALMVER" "$HOME"/.local/bin/cabal
