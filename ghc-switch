@@ -162,6 +162,9 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
       case "$MACHINE" in
         x86_64)
           case "$KERNEL" in
+            Darwin)
+              GHCTARBALL="ghc-8.0.1-x86_64-apple-darwin.tar.xz"
+              ;;
             Linux)
               case $(cat /etc/os-release | grep ^ID=) in
                 ID=arch)
@@ -233,6 +236,9 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
       case "$MACHINE" in
         x86_64)
           case "$KERNEL" in
+            Darwin)
+              GHCTARBALL="ghc-8.0.2-x86_64-apple-darwin.tar.xz"
+              ;;
             Linux)
               case $(cat /etc/os-release | grep ^ID=) in
                 ID=arch)
@@ -297,6 +303,9 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
       case "$MACHINE" in
         x86_64)
           case "$KERNEL" in
+            Darwin)
+              GHCTARBALL="ghc-8.2.1-x86_64-apple-darwin.tar.xz"
+              ;;
             Linux)
               case $(cat /etc/os-release | grep ^ID=) in
                 ID=arch)
@@ -370,6 +379,9 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
       case "$MACHINE" in
         x86_64)
           case "$KERNEL" in
+            Darwin)
+              GHCTARBALL="ghc-8.2.2-x86_64-apple-darwin.tar.xz"
+              ;;
             Linux)
               case $(cat /etc/os-release | grep ^ID=) in
                 ID=arch)
