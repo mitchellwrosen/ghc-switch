@@ -3,35 +3,101 @@
 ################################################################################
 # GHC
 
+ghcTarballSha256() {
+  case "$GHCTARBALL" in
+    ghc-8.2.2-aarch64-deb8-linux.tar.xz) exit 1 ;;
+    ghc-8.2.2-armv7-deb8-linux.tar.xz) exit 1 ;;
+    ghc-8.2.2-i386-deb7-linux.tar.xz) exit 1 ;;
+    ghc-8.2.2-i386-deb8-linux.tar.xz) exit 1 ;;
+    ghc-8.2.2-i386-unknown-mingw32.tar.xz) exit 1 ;;
+    ghc-8.2.2-powerpc-ibm-aix7.1.0.0.tar.xz) exit 1 ;;
+    ghc-8.2.2-x86_64-apple-darwin.tar.xz) exit 1 ;;
+    ghc-8.2.2-x86_64-centos67-linux.tar.xz) exit 1 ;;
+    ghc-8.2.2-x86_64-deb7-linux.tar.xz) exit 1 ;;
+    ghc-8.2.2-x86_64-deb8-linux-dwarf.tar.xz) echo 0fbe1e313653e922724e1de4b32db1744e3b1d6216ce4173680f84b2c06d9881 ;;
+    ghc-8.2.2-x86_64-deb8-linux.tar.xz) echo 48e205c62b9dc1ccf6739a4bc15a71e56dde2f891a9d786a1b115f0286111b2a ;;
+    ghc-8.2.2-x86_64-portbld10_3-freebsd.tar.xz) exit 1 ;;
+    ghc-8.2.2-x86_64-portbld11-freebsd.tar.xz) exit 1 ;;
+    ghc-8.2.2-x86_64-unknown-linux.tar.xz) exit 1 ;;
+    ghc-8.2.2-x86_64-unknown-mingw32.tar.xz) exit 1 ;;
+  esac
+}
+
 shouldInstallGhc() {
-  if [ ! -d "$HOME"/.ghc-switch/ghc-"$GHCVER" ]; then
+  if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
     return 0;
   else
     return 1;
   fi
 }
 
-# Download and build a GHC tarball from download.haskell.org into ~/.ghc-switch.
+# Download and build GHC tarball(s) from download.haskell.org into ~/.ghc-switch.
 installGhc() {
-  echo -n "ghc-$GHCVER: downloading... "
-  wget https://downloads.haskell.org/~ghc/"$GHCVER"/"$GHCTARBALL" >>"$GHCLOG" 2>&1
-  echo -en "\033[15Dunpacking...  \033[1D"
-  tar xf "$GHCTARBALL" >>"$GHCLOG" 2>&1
+  # We already downloaded this tarball, so go see if it's still there. If not,
+  # remove the file that claims us it's already been downloaded.
+  if [ -f "$HOME/.ghc-switch/.$GHCTARBALL" ]; then
+    TEMPDIR=$(cat "$HOME/.ghc-switch/.$GHCTARBALL")
+    if [ ! -f "$TEMPDIR/$GHCTARBALL" ] ||
+       [ "$(openssl dgst $TEMPDIR/$GHCTARBALL | cut -d' ' -f2)" != "$(ghcTarballSha256)" ]; then
+      rm -f "$TEMPDIR/$GHCTARBALL"
+      rm -f "$HOME/.ghc-switch/.$GHCTARBALL"
+    else
+      cd "$TEMPDIR"
+    fi
+  fi
+
+  if [ ! -f "$HOME/.ghc-switch/.$GHCTARBALL" ]; then
+    TEMPDIR=$(mktemp -d)
+    cd "$TEMPDIR"
+
+    echo -n "ghc-$GHCVER: downloading... "
+    echo "ghc-$GHCVER: downloading..." >>"$HOME/.ghc-switch/log"
+
+    wget "https://downloads.haskell.org/~ghc/$GHCVER/$GHCTARBALL" >>"$HOME/.ghc-switch/log" 2>&1
+
+    if [ "$(openssl dgst $TEMPDIR/$GHCTARBALL | cut -d' ' -f2)" != "$(ghcTarballSha256)" ]; then
+      echo "Bad SHA256" >>"$HOME/.ghc-switch/log"
+      exit 1
+    fi
+
+    echo "$TEMPDIR" > "$HOME/.ghc-switch/.$GHCTARBALL"
+  fi
+
+  echo "$TEMPDIR" >>"$HOME/.ghc-switch/log"
+
+  if [ ! -d "ghc-$GHCVER" ]; then
+    echo -en "\033[28Dghc-$GHCVER: unpacking...  \033[1D"
+    echo "ghc-$GHCVER: unpacking..." >>"$HOME/.ghc-switch/log"
+
+    trap "rm -rf ghc-$GHCVER" EXIT
+    tar xf "$GHCTARBALL" >>"$HOME/.ghc-switch/log" 2>&1
+    trap - EXIT
+  fi
+
   cd ghc-"$GHCVER"
-  echo -en "\033[13Dconfiguring... "
-  ./configure --prefix="$HOME"/.ghc-switch/ghc-"$GHCVER" >>"$GHCLOG" 2>&1
+
+  echo -en "\033[28Dghc-$GHCVER: configuring... "
+  echo "ghc-$GHCVER: configuring..." >>"$HOME/.ghc-switch/log"
+  ./configure --prefix="$HOME"/.ghc-switch/ghc-"$GHCVER" >>"$HOME/.ghc-switch/log" 2>&1
+
   echo -en "\033[15Dcompiling...  \033[1D"
-  ./configure --prefix="$HOME"/.ghc-switch/ghc-"$GHCVER" >>"$GHCLOG" 2>&1
-  make install >>"$GHCLOG" 2>&1
+  echo "ghc-$GHCVER: compiling..." >>"$HOME/.ghc-switch/log"
+  make install >>"$HOME/.ghc-switch/log" 2>&1
+
   echo -e "\033[13Dinstalled to $HOME/.ghc-switch/ghc-$GHCVER"
-  cd ..
+
+  rm -f "$HOME/.ghc-switch/log"
+  rm -f "$HOME/.ghc-switch/.$GHCTARBALL"
+  if [ ! -z "$TEMPDIR" ]; then
+    rm -rf "$TEMPDIR"
+  fi
 }
 
 ################################################################################
 # cabal-install
 
 shouldInstallCabal() {
-  if [ ! -f "$HOME"/.ghc-switch/cabal-"$CABALMVER" ]; then
+  if [ ! -f "$HOME/.ghc-switch/cabal-$CABALMVER" ]; then
     return 0;
   else
     return 1;
@@ -41,26 +107,21 @@ shouldInstallCabal() {
 # Download and build a cabal-install tarball from hackage.haskell.org; copy
 # binary to ~/.ghc-switch.
 installCabal() {
-  GHC_BIN="$HOME"/.ghc-switch/ghc-"$GHCVER"/bin/ghc
-  GHC_PKG_BIN="$HOME"/.ghc-switch/ghc-"$GHCVER"/bin/ghc-pkg
-  HADDOCK_BIN="$HOME"/.ghc-switch/ghc-"$GHCVER"/bin/haddock
-
-  echo -n "cabal-$CABALMVER: downloading... "
-  wget https://hackage.haskell.org/package/cabal-install-"$CABALVER"/cabal-install-"$CABALVER".tar.gz >>"$CABALLOG" 2>&1
-  echo -en "\033[15Dunpacking...  \033[1D"
-  tar xf cabal-install-"$CABALVER".tar.gz >>"$CABALLOG" 2>&1
-  cd cabal-install-"$CABALVER"
-  (
-    export EXTRA_CONFIGURE_OPTS="";
-    export GHC="$GHC_BIN";
-    export GHC_PKG="$GHC_PKG_BIN";
-    export HADDOCK="$HADDOCK_BIN";
-    echo -en "\033[13Dcompiling... "
-    ./bootstrap.sh -j --sandbox >>"$CABALLOG" 2>&1
-  )
-  mv .cabal-sandbox/bin/cabal "$HOME"/.ghc-switch/cabal-"$CABALMVER"
-  echo -e "\033[13Dinstalled to $HOME/.ghc-switch/cabal-$CABALMVER"
-  cd ..
+  # echo -n "cabal-$CABALMVER: downloading... "
+  # wget "https://hackage.haskell.org/package/cabal-install-$CABALVER/cabal-install-$CABALVER.tar.gz" >>"$HOME/.ghc-switch/log" 2>&1
+  # echo -en "\033[15Dunpacking...  \033[1D"
+  # tar xf cabal-install-"$CABALVER".tar.gz >>"$CABALLOG" 2>&1
+  # cd cabal-install-"$CABALVER"
+  # (
+  #   export EXTRA_CONFIGURE_OPTS="";
+  #   export PATH="$HOME"/.ghc-switch/ghc-"$GHCVER"/bin:"$PATH"
+  #   echo -en "\033[13Dcompiling... "
+  #   $CABALBOOTSTRAP >>"$CABALLOG" 2>&1
+  # )
+  # mv .cabal-sandbox/bin/cabal "$HOME"/.ghc-switch/cabal-"$CABALMVER"
+  # echo -e "\033[13Dinstalled to $HOME/.ghc-switch/cabal-$CABALMVER"
+  # cd ..
+  echo todo
 }
 
 ################################################################################
@@ -84,120 +145,114 @@ if [ "$1" == "--help" ]; then
   exit 0
 fi
 
-command -v dialog >/dev/null || { echo >&2 "dialog not found"; exit 1; }
-command -v ln     >/dev/null || { echo >&2 "ln not found";     exit 1; }
-command -v make   >/dev/null || { echo >&2 "make not found";   exit 1; }
-command -v tar    >/dev/null || { echo >&2 "tar not found";    exit 1; }
-command -v wget   >/dev/null || { echo >&2 "wget not found";   exit 1; }
+MACHINE=$(uname -m)
+KERNEL=$(uname -s)
 
 GHCVER=$1
 
 case "$GHCVER" in
-  "8.2.2")
-    CABALVER="2.0.0.1"
-    CABALMVER="2.0.1"
-    ;;
-  "8.2.1")
-    CABALVER="2.0.0.0"
-    CABALMVER="2.0.0"
+  "8.0.1")
+    CABALVER="1.24.0.0"
+    CABALMVER="1.24.0"
+    CABALBOOTSTRAP="./bootstrap.sh --sandbox"
     ;;
   "8.0.2")
     CABALVER="1.24.0.2"
     CABALMVER="1.24.2"
+    CABALBOOTSTRAP="./bootstrap.sh -j --sandbox"
+    ;;
+  "8.2.1")
+    CABALVER="2.0.0.0"
+    CABALMVER="2.0.0"
+    CABALBOOTSTRAP="./bootstrap.sh -j --sandbox"
+    ;;
+  "8.2.2")
+    CABALVER="2.0.0.1"
+    CABALMVER="2.0.1"
+    CABALBOOTSTRAP="./bootstrap.sh -j --sandbox"
     ;;
   *)
-    echo "$GHCVER ∉ {8.0.2, 8.2.1, 8.2.2}"
+    echo "$GHCVER ∉ {8.0.1, 8.0.2, 8.2.1, 8.2.2}"
     exit 1
     ;;
 esac
 
-GHCLOG=$HOME/.ghc-switch/ghc-$GHCVER.log
 CABALLOG=$HOME/.ghc-switch/cabal-$CABALMVER.log
 
 if shouldInstallGhc; then
+  GHCTARBALL=""
+
   case "$GHCVER" in
-    "8.2.2")
-      OPTIONS=(
-        "ghc-8.2.2-aarch64-deb8-linux.tar.xz" ""
-        "ghc-8.2.2-armv7-deb8-linux.tar.xz" ""
-        "ghc-8.2.2-i386-deb7-linux.tar.xz" ""
-        "ghc-8.2.2-i386-deb8-linux.tar.xz" ""
-        "ghc-8.2.2-i386-unknown-mingw32.tar.xz" ""
-        "ghc-8.2.2-powerpc-ibm-aix7.1.0.0.tar.xz" ""
-        "ghc-8.2.2-src.tar.xz" ""
-        "ghc-8.2.2-windows-extra-src.tar.xz" ""
-        "ghc-8.2.2-x86_64-apple-darwin.tar.xz" ""
-        "ghc-8.2.2-x86_64-centos67-linux.tar.xz" ""
-        "ghc-8.2.2-x86_64-deb7-linux.tar.xz" ""
-        "ghc-8.2.2-x86_64-deb8-linux-dwarf.tar.xz" ""
-        "ghc-8.2.2-x86_64-deb8-linux.tar.xz" ""
-        "ghc-8.2.2-x86_64-portbld10_3-freebsd.tar.xz" ""
-        "ghc-8.2.2-x86_64-portbld11-freebsd.tar.xz" ""
-        "ghc-8.2.2-x86_64-unknown-linux.tar.xz" ""
-        "ghc-8.2.2-x86_64-unknown-mingw32.tar.xz" ""
-      )
-      GHCTARBALL=$(dialog --stdout --menu "Download GHC bindist" 0 0 17 "${OPTIONS[@]}")
-      if [ $? -ne 0 ]; then
-        clear
-        exit 0
+    8.2.2)
+      case "$MACHINE" in
+        x86_64)
+          case "$KERNEL" in
+            Linux)
+              case $(cat /etc/os-release | grep ^ID=) in
+                ID=arch)
+                  if [ ! -f /usr/lib/libtinfo.so.5 ]; then
+                    echo "Missing: /usr/lib/libtinfo.so.5 (install ncurses5-compat-libs from the AUR)"
+                    exit 1
+                  fi
+                  read -p "Include DWARF support? (y/n) " INPUT
+                  case "$INPUT" in
+                    y*)
+                      if [ ! -f /usr/lib/libdw.so ]; then
+                        echo "Missing: /usr/lib/libdw.so (install libelf)"
+                        exit 1
+                      fi
+                      GHCTARBALL="ghc-8.2.2-x86_64-deb8-linux-dwarf.tar.xz"
+                      ;;
+                    *)
+                      GHCTARBALL="ghc-8.2.2-x86_64-deb8-linux.tar.xz"
+                      ;;
+                  esac
+                  ;;
+              esac
+              ;;
+          esac
+          ;;
+      esac
+
+      if [ -z "$GHCTARBALL" ]; then
+        echo "(I don't know about this machine, please file an issue.)"
+        echo ""
+        echo " 1) ghc-8.2.2-aarch64-deb8-linux.tar.xz"
+        echo " 2) ghc-8.2.2-armv7-deb8-linux.tar.xz"
+        echo " 3) ghc-8.2.2-i386-deb7-linux.tar.xz"
+        echo " 4) ghc-8.2.2-i386-deb8-linux.tar.xz"
+        echo " 5) ghc-8.2.2-i386-unknown-mingw32.tar.xz"
+        echo " 6) ghc-8.2.2-powerpc-ibm-aix7.1.0.0.tar.xz"
+        echo " 7) ghc-8.2.2-x86_64-apple-darwin.tar.xz"
+        echo " 8) ghc-8.2.2-x86_64-centos67-linux.tar.xz"
+        echo " 9) ghc-8.2.2-x86_64-deb7-linux.tar.xz"
+        echo "10) ghc-8.2.2-x86_64-deb8-linux-dwarf.tar.xz"
+        echo "11) ghc-8.2.2-x86_64-deb8-linux.tar.xz"
+        echo "12) ghc-8.2.2-x86_64-portbld10_3-freebsd.tar.xz"
+        echo "13) ghc-8.2.2-x86_64-portbld11-freebsd.tar.xz"
+        echo "14) ghc-8.2.2-x86_64-unknown-linux.tar.xz"
+        echo "15) ghc-8.2.2-x86_64-unknown-mingw32.tar.xz"
+        echo ""
+        read -p "> " INPUT
+        case "$INPUT" in
+          1) GHCTARBALL="ghc-8.2.2-aarch64-deb8-linux.tar.xz" ;;
+          2) GHCTARBALL="ghc-8.2.2-armv7-deb8-linux.tar.xz" ;;
+          3) GHCTARBALL="ghc-8.2.2-i386-deb7-linux.tar.xz" ;;
+          4) GHCTARBALL="ghc-8.2.2-i386-deb8-linux.tar.xz" ;;
+          5) GHCTARBALL="ghc-8.2.2-i386-unknown-mingw32.tar.xz" ;;
+          6) GHCTARBALL="ghc-8.2.2-powerpc-ibm-aix7.1.0.0.tar.xz" ;;
+          7) GHCTARBALL="ghc-8.2.2-x86_64-apple-darwin.tar.xz" ;;
+          8) GHCTARBALL="ghc-8.2.2-x86_64-centos67-linux.tar.xz" ;;
+          9) GHCTARBALL="ghc-8.2.2-x86_64-deb7-linux.tar.xz" ;;
+          10) GHCTARBALL="ghc-8.2.2-x86_64-deb8-linux-dwarf.tar.xz" ;;
+          11) GHCTARBALL="ghc-8.2.2-x86_64-deb8-linux.tar.xz" ;;
+          12) GHCTARBALL="ghc-8.2.2-x86_64-portbld10_3-freebsd.tar.xz" ;;
+          13) GHCTARBALL="ghc-8.2.2-x86_64-portbld11-freebsd.tar.xz" ;;
+          14) GHCTARBALL="ghc-8.2.2-x86_64-unknown-linux.tar.xz" ;;
+          15) GHCTARBALL="ghc-8.2.2-x86_64-unknown-mingw32.tar.xz" ;;
+          *) exit 1 ;;
+        esac
       fi
-      clear
-      ;;
-    "8.2.1")
-      OPTIONS=(
-        "ghc-8.2.1-aarch64-deb8-linux.tar.xz" ""
-        "ghc-8.2.1-armv7-deb8-linux.tar.xz" ""
-        "ghc-8.2.1-i386-deb7-linux.tar.xz" ""
-        "ghc-8.2.1-i386-deb8-linux.tar.xz" ""
-        "ghc-8.2.1-i386-unknown-mingw32.tar.xz" ""
-        "ghc-8.2.1-src.tar.xz" ""
-        "ghc-8.2.1-windows-extra-src.tar.xz" ""
-        "ghc-8.2.1-x86_64-apple-darwin.tar.xz" ""
-        "ghc-8.2.1-x86_64-centos67-linux.tar.xz" ""
-        "ghc-8.2.1-x86_64-deb7-linux.tar.xz" ""
-        "ghc-8.2.1-x86_64-deb8-linux-dwarf.tar.xz" ""
-        "ghc-8.2.1-x86_64-deb8-linux.tar.xz" ""
-        "ghc-8.2.1-x86_64-openbsd60-openbsd.tar.xz" ""
-        "ghc-8.2.1-x86_64-openbsd61-openbsd.tar.xz" ""
-        "ghc-8.2.1-x86_64-portbld10_3-freebsd.tar.xz" ""
-        "ghc-8.2.1-x86_64-portbld11-freebsd.tar.xz" ""
-        "ghc-8.2.1-x86_64-unknown-mingw32.tar.xz" ""
-      )
-      GHCTARBALL=$(dialog --stdout --menu "Download GHC bindist" 0 0 17 "${OPTIONS[@]}")
-      if [ $? -ne 0 ]; then
-        clear
-        exit 0
-      fi
-      clear
-      ;;
-    "8.0.2")
-      OPTIONS=(
-        "ghc-8.0.2-armv7-deb8-linux.tar.xz" ""
-        "ghc-8.0.2-i386-centos67-linux.tar.xz" ""
-        "ghc-8.0.2-i386-deb7-linux.tar.xz" ""
-        "ghc-8.0.2-i386-deb8-linux.tar.xz" ""
-        "ghc-8.0.2-i386-portbld-freebsd.tar.xz" ""
-        "ghc-8.0.2-i386-unknown-mingw32-win10.tar.xz" ""
-        "ghc-8.0.2-i386-unknown-mingw32.tar.xz" ""
-        "ghc-8.0.2-i386-unknown-solaris2.tar.xz" ""
-        "ghc-8.0.2-powerpc-ibm-aix7.1.0.0.tar.xz" ""
-        "ghc-8.0.2-src.tar.xz" ""
-        "ghc-8.0.2-windows-extra-src.tar.xz" ""
-        "ghc-8.0.2-x86_64-apple-darwin.tar.xz" ""
-        "ghc-8.0.2-x86_64-centos67-linux.tar.xz" ""
-        "ghc-8.0.2-x86_64-deb7-linux.tar.xz" ""
-        "ghc-8.0.2-x86_64-deb8-linux.tar.xz" ""
-        "ghc-8.0.2-x86_64-portbld-freebsd.tar.xz" ""
-        "ghc-8.0.2-x86_64-unknown-mingw32-win10.tar.xz" ""
-        "ghc-8.0.2-x86_64-unknown-mingw32.tar.xz" ""
-        "ghc-8.0.2-x86_64-unknown-openbsd.tar.xz" ""
-      )
-      GHCTARBALL=$(dialog --stdout --menu "Download GHC bindist" 0 0 19 "${OPTIONS[@]}")
-      if [ $? -ne 0 ]; then
-        clear
-        exit 0
-      fi
-      clear
       ;;
     *)
       exit 1
@@ -208,51 +263,26 @@ fi
 set -e
 
 if shouldInstallGhc || shouldInstallCabal; then
-  TEMPDIR=$(mktemp -d)
-  cd "$TEMPDIR"
+  mkdir -p "$HOME/.ghc-switch"
 
-  # Register an EXIT handler informing the user where we downloaded temporary
-  # files. Don't rm -rf on their behalf, ain't nobody want a lawsuit.
-  function cleanup {
-    case "$INSTALLING" in
-      "GHC")
-        echo ""
-        echo "Blarg, I am ded. Please check the log: $GHCLOG"
-        ;;
-      "CABAL")
-        echo ""
-        echo "Blarg, I am ded. Please check the log: $CABALLOG"
-        rm -f "$GHCLOG"
-        ;;
-      *)
-        rm -f "$GHCLOG"
-        rm -f "$CABALLOG"
-        rm -rf -I "$TEMPDIR"
-        ;;
-    esac
-  }
-  trap cleanup EXIT
-
-  if shouldInstallGhc; then
-    INSTALLING="GHC"
+  if true; then # shouldInstallGhc; then
     installGhc
   fi
 
-  if shouldInstallCabal; then
-    INSTALLING="CABAL"
-    installCabal
-  fi
-
-  INSTALLING=""
+  # if shouldInstallCabal; then
+  #   installCabal
+  # fi
 fi
 
-ln -s -f "$HOME"/.ghc-switch/ghc-"$GHCVER"/bin/ghc-"$GHCVER" "$HOME"/.local/bin/ghc
-ln -s -f "$HOME"/.ghc-switch/ghc-"$GHCVER"/bin/ghci-"$GHCVER" "$HOME"/.local/bin/ghci
-ln -s -f "$HOME"/.ghc-switch/ghc-"$GHCVER"/bin/ghc-pkg-"$GHCVER" "$HOME"/.local/bin/ghc-pkg
-ln -s -f "$HOME"/.ghc-switch/ghc-"$GHCVER"/bin/haddock-ghc-"$GHCVER" "$HOME"/.local/bin/haddock
-ln -s -f "$HOME"/.ghc-switch/ghc-"$GHCVER"/bin/hp2ps "$HOME"/.local/bin/hp2ps
-ln -s -f "$HOME"/.ghc-switch/ghc-"$GHCVER"/bin/hpc "$HOME"/.local/bin/hpc
-ln -s -f "$HOME"/.ghc-switch/ghc-"$GHCVER"/bin/hsc2hs "$HOME"/.local/bin/hsc2hs
-ln -s -f "$HOME"/.ghc-switch/ghc-"$GHCVER"/bin/runghc-"$GHCVER" "$HOME"/.local/bin/runghc
-ln -s -f "$HOME"/.ghc-switch/ghc-"$GHCVER"/bin/runghc-"$GHCVER" "$HOME"/.local/bin/runhaskell
-ln -s -f "$HOME"/.ghc-switch/cabal-"$CABALMVER" "$HOME"/.local/bin/cabal
+mkdir -p "$HOME/.local/bin"
+
+ln -s -f "$HOME/.ghc-switch/ghc-$GHCVER/bin/ghc-$GHCVER" "$HOME/.local/bin/ghc"
+ln -s -f "$HOME/.ghc-switch/ghc-$GHCVER/bin/ghci-$GHCVER" "$HOME/.local/bin/ghci"
+ln -s -f "$HOME/.ghc-switch/ghc-$GHCVER/bin/ghc-pkg-$GHCVER" "$HOME/.local/bin/ghc-pkg"
+ln -s -f "$HOME/.ghc-switch/ghc-$GHCVER/bin/haddock-ghc-$GHCVER" "$HOME/.local/bin/haddock"
+ln -s -f "$HOME/.ghc-switch/ghc-$GHCVER/bin/hp2ps" "$HOME/.local/bin/hp2ps"
+ln -s -f "$HOME/.ghc-switch/ghc-$GHCVER/bin/hpc" "$HOME/.local/bin/hpc"
+ln -s -f "$HOME/.ghc-switch/ghc-$GHCVER/bin/hsc2hs" "$HOME/.local/bin/hsc2hs"
+ln -s -f "$HOME/.ghc-switch/ghc-$GHCVER/bin/runghc-$GHCVER" "$HOME/.local/bin/runghc"
+ln -s -f "$HOME/.ghc-switch/ghc-$GHCVER/bin/runghc-$GHCVER" "$HOME/.local/bin/runhaskell"
+ln -s -f "$HOME/.ghc-switch/cabal-$CABALMVER" "$HOME/.local/bin/cabal"
