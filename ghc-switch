@@ -3,10 +3,10 @@
 function printUsage() {
   echo "Usage: ghc-switch VERSION"
   echo ""
-  echo "ghc-switch switches between versions of ghc, its friends, and cabal-install"
-  echo "(its acquaintance). Build artifacts are located in ~/.ghc-switch, and "
-  echo "binaries are symlinked in ~/.local/bin, which should be on your PATH. If"
-  echo "ghc-switch exits with a non-zero exit code, check ~/.ghc-switch/log"
+  echo "ghc-switch switches between versions of ghc and related binaries. Build"
+  echo "artifacts are located in ~/.ghc-switch, and binaries are symlinked in"
+  echo "~/.local/bin, which should be on your PATH. If ghc-switch exits with a"
+  echo "non-zero exit code, check ~/.ghc-switch/log"
 }
 
 # sha256 :: Thing -> SHA256
@@ -116,30 +116,10 @@ KERNEL=$(uname -s)
 GHCVER=$1
 
 case "$GHCVER" in
-  "8.0.1")
-    CABALVER="1.24.0.0"
-    CABALMVER="1.24.0"
-    CABALSHA256="d840ecfd0a95a96e956b57fb2f3e9c81d9fc160e1fd0ea350b0d37d169d9e87e"
-    CABALBOOTSTRAP="./bootstrap.sh --sandbox"
-    ;;
-  "8.0.2")
-    CABALVER="1.24.0.2"
-    CABALMVER="1.24.2"
-    CABALSHA256="2ac8819238a0e57fff9c3c857e97b8705b1b5fef2e46cd2829e85d96e2a00fe0"
-    CABALBOOTSTRAP="./bootstrap.sh -j --sandbox"
-    ;;
-  "8.2.1")
-    CABALVER="2.0.0.0"
-    CABALMVER="2.0.0"
-    CABALSHA256="5f370bac2f18f0d96f525e33d723f248e50d73f452076d49425a752bba062b2d"
-    CABALBOOTSTRAP="./bootstrap.sh -j --sandbox"
-    ;;
-  "8.2.2")
-    CABALVER="2.0.0.1"
-    CABALMVER="2.0.1"
-    CABALSHA256="f991e36f3adaa1c7e2f0c422a2f2a4ab21b7041c82a8896f72afc9843a0d5d99"
-    CABALBOOTSTRAP="./bootstrap.sh -j --sandbox"
-    ;;
+  "8.0.1") ;;
+  "8.0.2") ;;
+  "8.2.1") ;;
+  "8.2.2") ;;
   *)
     echo "$GHCVER ∉ {8.0.1, 8.0.2, 8.2.1, 8.2.2}"
     exit 1
@@ -515,65 +495,16 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
   if [ ! -z "$TEMPDIR" ]; then
     rm -rf "$TEMPDIR"
   fi
-fi
 
-if [ ! -f "$HOME/.ghc-switch/cabal-$CABALMVER" ]; then
-  # Install cabal-install: download, unpack, bootstrap.
-  #
-  # We do our best not to repeat work in case something goes wrong (or we ctrl-C
-  # out).
-
-  if [ -f "$HOME/.ghc-switch/.$CABALVER" ]; then
-    TEMPDIR=$(cat "$HOME/.ghc-switch/.$CABALVER")
-    if [ ! -f "$TEMPDIR/cabal-install-$CABALVER.tar.gz" ] ||
-       [ $(sha256 "$TEMPDIR/cabal-install-$CABALVER.tar.gz") != "$CABALSHA256" ]; then
-      rm -f "$TEMPDIR/cabal-install-$CABALVER.tar.gz"
-      rm -f "$HOME/.ghc-switch/.$CABALVER"
-    else
-      cd "$TEMPDIR"
-    fi
-  fi
-
-  if [ ! -f "$HOME/.ghc-switch/.$CABALVER" ]; then
-    TEMPDIR=$(mktemp -d)
-    cd "$TEMPDIR"
-
-    echo -n "cabal-install-$CABALVER: downloading "
-    wget "https://hackage.haskell.org/package/cabal-install-$CABALVER/cabal-install-$CABALVER.tar.gz" >"$HOME/.ghc-switch/log" 2>&1
-
-    if [ $(sha256 "cabal-install-$CABALVER.tar.gz") != "$CABALSHA256" ]; then
-      exit 1
-    fi
-
-    echo "$TEMPDIR" > "$HOME/.ghc-switch/.$CABALVER"
-  fi
-
-  if [ ! -d "cabal-install-$CABALVER" ]; then
-    echo -en "\033[50Dcabal-install-$CABALVER: unpacking  \033[1D"
-    trap "rm -rf cabal-install-$CABALVER" EXIT
-    tar xf "cabal-install-$CABALVER.tar.gz" >"$HOME/.ghc-switch/log" 2>&1
-    trap - EXIT
-  fi
-
-  echo -en "\033[50Dcabal-install-$CABALVER: compiling "
-  cd "cabal-install-$CABALVER"
-
-  (
-    export EXTRA_CONFIGURE_OPTS="";
-    export PATH="$HOME/.ghc-switch/ghc-$GHCVER/bin:$PATH"
-    $CABALBOOTSTRAP >"$HOME/.ghc-switch/log" 2>&1
-  )
-
-  mv .cabal-sandbox/bin/cabal "$HOME/.ghc-switch/cabal-$CABALMVER"
-  echo -e "\033[10Dinstalled to ~/.ghc-switch/cabal-$CABALMVER"
-
-  cd ..
-
-  rm -f "$HOME/.ghc-switch/log"
-  rm -f "$HOME/.ghc-switch/.$CABALVER"
-  if [ ! -z "$TEMPDIR" ]; then
-    rm -rf "$TEMPDIR"
-  fi
+  ln -s -f "$HOME/.ghc-switch/ghc-$GHCVER/bin/ghc-$GHCVER" "$HOME/.local/bin/ghc-$GHCVER"
+  ln -s -f "$HOME/.ghc-switch/ghc-$GHCVER/bin/ghci-$GHCVER" "$HOME/.local/bin/ghci-$GHCVER"
+  ln -s -f "$HOME/.ghc-switch/ghc-$GHCVER/bin/ghc-pkg-$GHCVER" "$HOME/.local/bin/ghc-pkg-$GHCVER"
+  ln -s -f "$HOME/.ghc-switch/ghc-$GHCVER/bin/haddock-ghc-$GHCVER" "$HOME/.local/bin/haddock-$GHCVER"
+  ln -s -f "$HOME/.ghc-switch/ghc-$GHCVER/bin/hp2ps" "$HOME/.local/bin/hp2ps-$GHCVER"
+  ln -s -f "$HOME/.ghc-switch/ghc-$GHCVER/bin/hpc" "$HOME/.local/bin/hpc-$GHCVER"
+  ln -s -f "$HOME/.ghc-switch/ghc-$GHCVER/bin/hsc2hs" "$HOME/.local/bin/hsc2hs-$GHCVER"
+  ln -s -f "$HOME/.ghc-switch/ghc-$GHCVER/bin/runghc-$GHCVER" "$HOME/.local/bin/runghc-$GHCVER"
+  ln -s -f "$HOME/.ghc-switch/ghc-$GHCVER/bin/runghc-$GHCVER" "$HOME/.local/bin/runhaskell-$GHCVER"
 fi
 
 ln -s -f "$HOME/.ghc-switch/ghc-$GHCVER/bin/ghc-$GHCVER" "$HOME/.local/bin/ghc"
@@ -585,4 +516,3 @@ ln -s -f "$HOME/.ghc-switch/ghc-$GHCVER/bin/hpc" "$HOME/.local/bin/hpc"
 ln -s -f "$HOME/.ghc-switch/ghc-$GHCVER/bin/hsc2hs" "$HOME/.local/bin/hsc2hs"
 ln -s -f "$HOME/.ghc-switch/ghc-$GHCVER/bin/runghc-$GHCVER" "$HOME/.local/bin/runghc"
 ln -s -f "$HOME/.ghc-switch/ghc-$GHCVER/bin/runghc-$GHCVER" "$HOME/.local/bin/runhaskell"
-ln -s -f "$HOME/.ghc-switch/cabal-$CABALMVER" "$HOME/.local/bin/cabal"
