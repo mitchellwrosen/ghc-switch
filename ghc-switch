@@ -15,9 +15,9 @@ function printUsage() {
 # dies.
 sha256() {
   if command -v sha256sum >/dev/null; then
-    echo $(sha256sum $1 | cut -c1-64)
+    sha256sum "$1" | cut -c1-64
   elif command -v openssl >/dev/null; then
-    echo $(openssl dgst -sha256 $1 | cut -d' ' -f2)
+    openssl dgst -sha256 "$1" | cut -d' ' -f2
   else
     echo "Missing: sha256sum or openssl" >&2
     exit 1
@@ -166,7 +166,7 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
               GHCTARBALL="ghc-8.0.1-x86_64-apple-darwin.tar.xz"
               ;;
             Linux)
-              case $(cat /etc/os-release | grep ^ID=) in
+              case $(grep ^ID= /etc/os-release) in
                 ID=arch)
                   if [ ! -f /usr/lib/libtinfo.so.5 ]; then
                     echo "Missing: /usr/lib/libtinfo.so.5" >&2
@@ -206,7 +206,7 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
         echo "19) ghc-8.0.1-x86_64-unknown-openbsd5.9.tar.xz"
         echo "20) ghc-8.0.1-x86_64-unknown-solaris2.11.tar.xz"
         echo ""
-        read -p "> " INPUT
+        read -r -p "> " INPUT
         case "$INPUT" in
           1) GHCTARBALL="ghc-8.0.1-armv7-deb8-linux.tar.xz" ;;
           2) GHCTARBALL="ghc-8.0.1-i386-centos67-linux.tar.xz" ;;
@@ -240,7 +240,7 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
               GHCTARBALL="ghc-8.0.2-x86_64-apple-darwin.tar.xz"
               ;;
             Linux)
-              case $(cat /etc/os-release | grep ^ID=) in
+              case $(grep ^ID= /etc/os-release) in
                 ID=arch)
                   if [ ! -f /usr/lib/libtinfo.so.5 ]; then
                     echo "Missing: /usr/lib/libtinfo.so.5" >&2
@@ -276,7 +276,7 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
         echo "16) ghc-8.0.2-x86_64-unknown-mingw32.tar.xz"
         echo "17) ghc-8.0.2-x86_64-unknown-openbsd.tar.xz"
         echo ""
-        read -p "> " INPUT
+        read -r -p "> " INPUT
         case "$INPUT" in
           1) GHCTARBALL="ghc-8.0.2-armv7-deb8-linux.tar.xz" ;;
           2) GHCTARBALL="ghc-8.0.2-i386-centos67-linux.tar.xz" ;;
@@ -307,14 +307,14 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
               GHCTARBALL="ghc-8.2.1-x86_64-apple-darwin.tar.xz"
               ;;
             Linux)
-              case $(cat /etc/os-release | grep ^ID=) in
+              case $(grep ^ID= /etc/os-release) in
                 ID=arch)
                   if [ ! -f /usr/lib/libtinfo.so.5 ]; then
                     echo "Missing: /usr/lib/libtinfo.so.5" >&2
                     echo "Suggested action: aura -A ncurses5-compat-libs" >&2
                     exit 1
                   fi
-                  read -p "Include DWARF support? (y/n) " INPUT
+                  read -r -p "Include DWARF support? (y/n) " INPUT
                   case "$INPUT" in
                     y*)
                       if [ ! -f /usr/lib/libdw.so ]; then
@@ -354,7 +354,7 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
         echo "14) ghc-8.2.1-x86_64-portbld11-freebsd.tar.xz"
         echo "15) ghc-8.2.1-x86_64-unknown-mingw32.tar.xz"
         echo ""
-        read -p "> " INPUT
+        read -r -p "> " INPUT
         case "$INPUT" in
           1) GHCTARBALL="ghc-8.2.1-aarch64-deb8-linux.tar.xz" ;;
           2) GHCTARBALL="ghc-8.2.1-armv7-deb8-linux.tar.xz" ;;
@@ -383,14 +383,14 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
               GHCTARBALL="ghc-8.2.2-x86_64-apple-darwin.tar.xz"
               ;;
             Linux)
-              case $(cat /etc/os-release | grep ^ID=) in
+              case $(grep ^ID= /etc/os-release) in
                 ID=arch)
                   if [ ! -f /usr/lib/libtinfo.so.5 ]; then
                     echo "Missing: /usr/lib/libtinfo.so.5" >&2
                     echo "Suggested action: aura -A ncurses5-compat-libs" >&2
                     exit 1
                   fi
-                  read -p "Include DWARF support? (y/n) " INPUT
+                  read -r -p "Include DWARF support? (y/n) " INPUT
                   case "$INPUT" in
                     y*)
                       if [ ! -f /usr/lib/libdw.so ]; then
@@ -430,7 +430,7 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
         echo "14) ghc-8.2.2-x86_64-unknown-linux.tar.xz"
         echo "15) ghc-8.2.2-x86_64-unknown-mingw32.tar.xz"
         echo ""
-        read -p "> " INPUT
+        read -r -p "> " INPUT
         case "$INPUT" in
           1) GHCTARBALL="ghc-8.2.2-aarch64-deb8-linux.tar.xz" ;;
           2) GHCTARBALL="ghc-8.2.2-armv7-deb8-linux.tar.xz" ;;
@@ -464,7 +464,7 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
   if [ -f "$HOME/.ghc-switch/.$GHCTARBALL" ]; then
     TEMPDIR=$(cat "$HOME/.ghc-switch/.$GHCTARBALL")
     if [ ! -f "$TEMPDIR/$GHCTARBALL" ] ||
-       [ "$(sha256 $TEMPDIR/$GHCTARBALL)" != "$(ghcTarballSha256)" ]; then
+       [ $(sha256 "$TEMPDIR/$GHCTARBALL") != $(ghcTarballSha256) ]; then
       rm -f "$TEMPDIR/$GHCTARBALL"
       rm -f "$HOME/.ghc-switch/.$GHCTARBALL"
     else
@@ -479,7 +479,7 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
     echo -n "ghc-$GHCVER: downloading "
     wget "https://downloads.haskell.org/~ghc/$GHCVER/$GHCTARBALL" >"$HOME/.ghc-switch/log" 2>&1
 
-    if [ "$(sha256 $GHCTARBALL)" != "$(ghcTarballSha256)" ]; then
+    if [ $(sha256 "$GHCTARBALL") != $(ghcTarballSha256) ]; then
       exit 1
     fi
 
@@ -526,7 +526,7 @@ if [ ! -f "$HOME/.ghc-switch/cabal-$CABALMVER" ]; then
   if [ -f "$HOME/.ghc-switch/.$CABALVER" ]; then
     TEMPDIR=$(cat "$HOME/.ghc-switch/.$CABALVER")
     if [ ! -f "$TEMPDIR/cabal-install-$CABALVER.tar.gz" ] ||
-       [ "$(sha256 $TEMPDIR/cabal-install-$CABALVER.tar.gz)" != "$CABALSHA256" ]; then
+       [ $(sha256 "$TEMPDIR/cabal-install-$CABALVER.tar.gz") != "$CABALSHA256" ]; then
       rm -f "$TEMPDIR/cabal-install-$CABALVER.tar.gz"
       rm -f "$HOME/.ghc-switch/.$CABALVER"
     else
@@ -541,10 +541,7 @@ if [ ! -f "$HOME/.ghc-switch/cabal-$CABALMVER" ]; then
     echo -n "cabal-install-$CABALVER: downloading "
     wget "https://hackage.haskell.org/package/cabal-install-$CABALVER/cabal-install-$CABALVER.tar.gz" >"$HOME/.ghc-switch/log" 2>&1
 
-    if [ "$(sha256 cabal-install-$CABALVER.tar.gz)" != "$CABALSHA256" ]; then
-      echo ""
-      echo "$(sha256 cabal-install-$CABALVER.tar.gz)"
-      echo "$CABALSHA256"
+    if [ $(sha256 "cabal-install-$CABALVER.tar.gz") != "$CABALSHA256" ]; then
       exit 1
     fi
 
