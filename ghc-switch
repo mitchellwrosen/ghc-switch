@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 function printUsage() {
   echo "Usage: ghc-switch VERSION"
@@ -140,6 +140,17 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
   case "$GHCVER" in
     8.0.1)
       case "$MACHINE" in
+        amd64)
+          case "$KERNEL" in
+            FreeBSD)
+              case $(uname -r) in
+                11.*)
+                  GHCTARBALL="ghc-8.0.1-x86_64-portbld-freebsd.tar.xz"
+                  ;;
+              esac
+              ;;
+          esac
+          ;;
         x86_64)
           case "$KERNEL" in
             Darwin)
@@ -214,6 +225,17 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
       ;;
     8.0.2)
       case "$MACHINE" in
+        amd64)
+          case "$KERNEL" in
+            FreeBSD)
+              case $(uname -r) in
+                11.*)
+                  GHCTARBALL="ghc-8.0.2-x86_64-portbld-freebsd.tar.xz"
+                  ;;
+              esac
+              ;;
+          esac
+          ;;
         x86_64)
           case "$KERNEL" in
             Darwin)
@@ -281,6 +303,17 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
       ;;
     8.2.1)
       case "$MACHINE" in
+        amd64)
+          case "$KERNEL" in
+            FreeBSD)
+              case $(uname -r) in
+                11.*)
+                  GHCTARBALL="ghc-8.2.1-x86_64-portbld11-freebsd.tar.xz"
+                  ;;
+              esac
+              ;;
+          esac
+          ;;
         x86_64)
           case "$KERNEL" in
             Darwin)
@@ -357,6 +390,17 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
       ;;
     8.2.2)
       case "$MACHINE" in
+        amd64)
+          case "$KERNEL" in
+            FreeBSD)
+              case $(uname -r) in
+                11.*)
+                  GHCTARBALL="ghc-8.2.2-x86_64-portbld11-freebsd.tar.xz"
+                  ;;
+              esac
+              ;;
+          esac
+          ;;
         x86_64)
           case "$KERNEL" in
             Darwin)
@@ -469,7 +513,7 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
   if [ ! -d "ghc-$GHCVER" ]; then
     echo -en "\033[30Dghc-$GHCVER: unpacking  \033[1D"
     trap "rm -rf ghc-$GHCVER" EXIT
-    tar xf "$GHCTARBALL" >"$HOME/.ghc-switch/log" 2>&1
+    tar xvf "$GHCTARBALL" >"$HOME/.ghc-switch/log" 2>&1
     trap - EXIT
   fi
 
@@ -479,8 +523,28 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
   ./configure --prefix="$HOME/.ghc-switch/ghc-$GHCVER" >"$HOME/.ghc-switch/log" 2>&1
 
   echo -en "\033[12Dinstalling  \033[1D"
+
+  MAKE=make
+  # -n is universally dry-run
+  if ! "$MAKE" -n > "$HOME/.ghc-switch/log" 2>&1; then
+    case "$KERNEL" in
+      FreeBSD)
+        if type gmake >/dev/null 2>&1 ; then
+          MAKE=gmake
+        else
+          printf "Please install GNU make by 'pkg install gmake'\n"
+          exit 1
+        fi
+        ;;
+      *)
+        echo "Sorry. make is unusable."
+        exit 1
+        ;;
+    esac
+  fi
+
   trap "rm -rf $HOME/.ghc-switch/ghc-$GHCVER" EXIT
-  make install-strip >"$HOME/.ghc-switch/log" 2>&1
+  "$MAKE" install-strip >"$HOME/.ghc-switch/log" 2>&1
   if [ "$GHCNOPIE" ]; then
     sed -i 's/("C compiler link flags", "/("C compiler link flags", "-no-pie /' "$HOME/.ghc-switch/ghc-$GHCVER/lib/ghc-$GHCVER/settings"
   fi
