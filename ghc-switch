@@ -485,6 +485,11 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
     cd "$TEMPDIR"
 
     echo -n "ghc-$GHCVER: downloading "
+
+    if ! type wget >/dev/null 2>&1; then
+      echo "\nMissing: wget" >&2
+      exit 1
+    fi
     wget "https://downloads.haskell.org/~ghc/$GHCVER/$GHCTARBALL" >"$HOME/.ghc-switch/log" 2>&1
 
     if [ $(sha256 "$GHCTARBALL") != $(ghcTarballSha256) ]; then
@@ -508,24 +513,23 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
 
   echo -en "\033[12Dinstalling  \033[1D"
 
-  MAKE=make
-  # -n is universally dry-run
-  if ! "$MAKE" -n > "$HOME/.ghc-switch/log" 2>&1; then
-    case "$KERNEL" in
-      FreeBSD)
-        if type gmake >/dev/null 2>&1 ; then
-          MAKE=gmake
-        else
-          printf "Please install GNU make by 'pkg install gmake'\n"
-          exit 1
-        fi
-        ;;
-      *)
-        echo "Sorry. make is unusable."
+  case "$KERNEL" in
+    FreeBSD)
+      if ! type gmake >/dev/null 2>&1; then
+        echo "\nMissing: gmake" >&2
+        echo "Suggested action: pkg install gmake" >&2
         exit 1
-        ;;
-    esac
-  fi
+      fi
+      MAKE=gmake
+      ;;
+    *)
+      if ! type make >/dev/null 2>&1; then
+        echo "\nMissing: make" >&2
+        exit 1
+      fi
+      MAKE=make
+      ;;
+  esac
 
   trap "rm -rf $HOME/.ghc-switch/ghc-$GHCVER" EXIT
   "$MAKE" install-strip >"$HOME/.ghc-switch/log" 2>&1
