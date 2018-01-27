@@ -140,21 +140,17 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
   case "$GHCVER" in
     8.0.1)
       case "$MACHINE" in
-        amd64)
+        amd64|x86_64)
           case "$KERNEL" in
+            Darwin)
+              GHCTARBALL="ghc-8.0.1-x86_64-apple-darwin.tar.xz"
+              ;;
             FreeBSD)
               case $(uname -r) in
                 11.*)
                   GHCTARBALL="ghc-8.0.1-x86_64-portbld-freebsd.tar.xz"
                   ;;
               esac
-              ;;
-          esac
-          ;;
-        x86_64)
-          case "$KERNEL" in
-            Darwin)
-              GHCTARBALL="ghc-8.0.1-x86_64-apple-darwin.tar.xz"
               ;;
             Linux)
               case $(grep ^ID= /etc/os-release) in
@@ -225,21 +221,17 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
       ;;
     8.0.2)
       case "$MACHINE" in
-        amd64)
+        amd64|x86_64)
           case "$KERNEL" in
+            Darwin)
+              GHCTARBALL="ghc-8.0.2-x86_64-apple-darwin.tar.xz"
+              ;;
             FreeBSD)
               case $(uname -r) in
                 11.*)
                   GHCTARBALL="ghc-8.0.2-x86_64-portbld-freebsd.tar.xz"
                   ;;
               esac
-              ;;
-          esac
-          ;;
-        x86_64)
-          case "$KERNEL" in
-            Darwin)
-              GHCTARBALL="ghc-8.0.2-x86_64-apple-darwin.tar.xz"
               ;;
             Linux)
               case $(grep ^ID= /etc/os-release) in
@@ -303,21 +295,17 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
       ;;
     8.2.1)
       case "$MACHINE" in
-        amd64)
+        amd64|x86_64)
           case "$KERNEL" in
+            Darwin)
+              GHCTARBALL="ghc-8.2.1-x86_64-apple-darwin.tar.xz"
+              ;;
             FreeBSD)
               case $(uname -r) in
                 11.*)
                   GHCTARBALL="ghc-8.2.1-x86_64-portbld11-freebsd.tar.xz"
                   ;;
               esac
-              ;;
-          esac
-          ;;
-        x86_64)
-          case "$KERNEL" in
-            Darwin)
-              GHCTARBALL="ghc-8.2.1-x86_64-apple-darwin.tar.xz"
               ;;
             Linux)
               case $(grep ^ID= /etc/os-release) in
@@ -390,21 +378,17 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
       ;;
     8.2.2)
       case "$MACHINE" in
-        amd64)
+        amd64|x86_64)
           case "$KERNEL" in
+            Darwin)
+              GHCTARBALL="ghc-8.2.2-x86_64-apple-darwin.tar.xz"
+              ;;
             FreeBSD)
               case $(uname -r) in
                 11.*)
                   GHCTARBALL="ghc-8.2.2-x86_64-portbld11-freebsd.tar.xz"
                   ;;
               esac
-              ;;
-          esac
-          ;;
-        x86_64)
-          case "$KERNEL" in
-            Darwin)
-              GHCTARBALL="ghc-8.2.2-x86_64-apple-darwin.tar.xz"
               ;;
             Linux)
               case $(grep ^ID= /etc/os-release) in
