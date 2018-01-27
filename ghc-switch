@@ -402,7 +402,7 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
                   case "$INPUT" in
                     y*)
                       if [ ! -f /usr/lib/libdw.so ]; then
-                        echo "Missing: /usr/lib/libdw.so (install libelf)" >&2
+                        echo "Missing: /usr/lib/libdw.so" >&2
                         echo "Suggested action: pacman -S libelf" >&2
                         exit 1
                       fi
@@ -532,7 +532,7 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
   esac
 
   trap "rm -rf $HOME/.ghc-switch/ghc-$GHCVER" EXIT
-  "$MAKE" install-strip >"$HOME/.ghc-switch/log" 2>&1
+  "$MAKE" install >"$HOME/.ghc-switch/log" 2>&1
   if [ "$GHCNOPIE" ]; then
     sed -i 's/("C compiler link flags", "/("C compiler link flags", "-no-pie /' "$HOME/.ghc-switch/ghc-$GHCVER/lib/ghc-$GHCVER/settings"
   fi
