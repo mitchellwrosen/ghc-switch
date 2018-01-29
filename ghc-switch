@@ -29,73 +29,80 @@ sha256() {
 # Returns the SHA256 of $GHCTARBALL.
 ghcTarballSha256() {
   case "$GHCTARBALL" in
-    ghc-8.0.1-armv7-deb8-linux.tar.xz)             echo "b905ddac02e14bb44365898918d8c727f50cba556757483d53c54874b5a4fd64" ;;
-    ghc-8.0.1-i386-centos67-linux.tar.xz)          echo "f6167a688cfe1f4ae753875bdbe5a5adf85d786670eb5eb4cd09cd5b306fff48" ;;
-    ghc-8.0.1-i386-deb7-linux.tar.xz)              echo "ae17c19ec9731dbf963fe2fe465a5d7cb1e13c73c6a1a12b04ef79990cb5507f" ;;
-    ghc-8.0.1-i386-deb8-linux.tar.xz)              echo "81c27c59f4c4efd7458f308d6a8e130b67c6c156999b78bad42caf78a7453ab1" ;;
-    ghc-8.0.1-i386-portbld-freebsd.tar.xz)         echo "4cf998635a967575f7447eb2bfbb1e23ecf4ee80c34eef744f185b734d1dec54" ;;
-    ghc-8.0.1-i386-unknown-mingw32-win10.tar.xz)   echo "cd77cf5d887c6f1e5a65c1cb9c703753f837fd51855be5583b812200e3f0ff0d" ;;
-    ghc-8.0.1-i386-unknown-mingw32.tar.xz)         echo "82c32832db2551b9c77c173486b1ba1e87016c71898153a878bf4efee901dee3" ;;
-    ghc-8.0.1-i386-unknown-solaris2.11.tar.xz)     echo "6c88a534595361340a06a6b2e495c9107f8dbf6284ab704e3e49a62718d49e20" ;;
-    ghc-8.0.1-powerpc-ibm-aix7.1.0.0.tar.xz)       echo "89f483709eda47f267f6f387461c72ae3365d852c40b29ed035d20efc70be29e" ;;
-    ghc-8.0.1-powerpc64-unknown-linux.tar.xz)      echo "e64c607bd01a50e017b24b610e11b755e6ed1ca791edc0aed061f027801f051c" ;;
-    ghc-8.0.1-sparc-sun-solaris2.11.tar.xz)        echo "5270414303e9e6fe728a6bac82afe5757e9f40588a2d831b175594a2efc0b644" ;;
-    ghc-8.0.1-x86_64-apple-darwin.tar.xz)          echo "06ec33056b927da5e68055147f165f873088f6812fe0c642c4c78c9a449fbc42" ;;
-    ghc-8.0.1-x86_64-centos67-linux.tar.xz)        echo "63b4a361dfc124c5d60945718e866475a96cbe6787da620d4778a6c4f9065a3f" ;;
-    ghc-8.0.1-x86_64-deb7-linux.tar.xz)            echo "86a8109dfa4ec000e0048ed9d072c0d232affeb1069ca96b3995cb5cef2230a7" ;;
-    ghc-8.0.1-x86_64-deb8-linux.tar.xz)            echo "b1c06af49b29521d5b122ef3311f5843e342db8b1769ea7c602cc16d66098ced" ;;
-    ghc-8.0.1-x86_64-portbld-freebsd.tar.xz)       echo "a305c40db0dbc9f9dc522e5131ab18f5d8daf932df890e94a47be2c1bdc944bc" ;;
-    ghc-8.0.1-x86_64-unknown-mingw32-win10.tar.xz) echo "b466f91c5943966142390c0ef0bf52a5c9e7c6e1396c6145b64a51d6c28cde2b" ;;
-    ghc-8.0.1-x86_64-unknown-mingw32.tar.xz)       echo "a2fd8bdd53dbee7f2f8ac57409b5f07279d4ee52c1ae3a324baac3b8927aed68" ;;
-    ghc-8.0.1-x86_64-unknown-openbsd5.9.tar.xz)    echo "bb98f9df1ec718f6dba3931565a073af442dc9ceef83377c26bdd2eb47f6c6c3" ;;
-    ghc-8.0.1-x86_64-unknown-solaris2.11.tar.xz)   echo "ab2692b99775eb7746fe9182426585c496cf09c3102086f1086563dd4bb496dc" ;;
-    ghc-8.0.2-armv7-deb8-linux.tar.xz)             echo "68615e5f6bdad14c5fe106b05357100b162f589382b22c96ef86656caf71d199" ;;
-    ghc-8.0.2-i386-centos67-linux.tar.xz)          echo "829b5d973d75a868e19ad38409df3b491bc9703949a04486882f04b15a7bfbd9" ;;
-    ghc-8.0.2-i386-deb7-linux.tar.xz)              echo "07ead3a49f8c9df4b429e7a2f96f6f31bcab8d3ff8277a9aed0201d13ddad448" ;;
-    ghc-8.0.2-i386-deb8-linux.tar.xz)              echo "818621342a2161b8afcc995a0765816bb40aefbfa1db2c8a7d59c04d8b18228a" ;;
-    ghc-8.0.2-i386-portbld-freebsd.tar.xz)         echo "059430cee15b526c12af6aa214a72f1a2b3aebce6b8f7af15ae1c8217a1d247c" ;;
-    ghc-8.0.2-i386-unknown-mingw32-win10.tar.xz)   echo "ecacba03da214a7d3d7758b8dc2a8ebd48f4c8e255f87862df156d38ec2c0876" ;;
-    ghc-8.0.2-i386-unknown-mingw32.tar.xz)         echo "328b7d4395f4802118054e03c099218b99d0ebb141326964e1c3e591924a1f31" ;;
-    ghc-8.0.2-i386-unknown-solaris2.tar.xz)        echo "1554ae98e60f816c4d507fc5b824a67feaafc2f31b7387479511a26eeee8c2a0" ;;
-    ghc-8.0.2-powerpc-ibm-aix7.1.0.0.tar.xz)       echo "f2907c9a10d1f91a499699e0e6bfe3f385cffc34e39454e1297eb9a391505182" ;;
-    ghc-8.0.2-x86_64-apple-darwin.tar.xz)          echo "ff50a2df9f002f33b9f09717ebf5ec5a47906b9b65cc57b1f9849f8b2e06788d" ;;
-    ghc-8.0.2-x86_64-centos67-linux.tar.xz)        echo "145f12323c869f65c79f7c2d2b6dadfd3d9bad8739ef56580b38f715a6dbbb76" ;;
-    ghc-8.0.2-x86_64-deb7-linux.tar.xz)            echo "b2f5c304b57ac5840a0d2ef763a3c6fa858c70840f749cfad12ed227da973c0a" ;;
-    ghc-8.0.2-x86_64-deb8-linux.tar.xz)            echo "5ee68290db00ca0b79d57bc3a5bdce470de9ce9da0b098a7ce6c504605856c8f" ;;
-    ghc-8.0.2-x86_64-portbld-freebsd.tar.xz)       echo "b36a20e5cae24d70bbb6116ae486f21811e9384f15d3892d260f02fba3e3bb8c" ;;
-    ghc-8.0.2-x86_64-unknown-mingw32-win10.tar.xz) echo "e433e1c5e7029242245cf877ceb79ed30d404feeb1b6db0b2a4b45d25da8e49c" ;;
-    ghc-8.0.2-x86_64-unknown-mingw32.tar.xz)       echo "8c42c1f4af995205b9816a1e97e2752fe758544c1f5fe77958cdcd319c9c2d53" ;;
-    ghc-8.0.2-x86_64-unknown-openbsd.tar.xz)       echo "591493d2ceaba90caee88989508350b844af4fe78e7f8a88cfef60d23688d9a6" ;;
-    ghc-8.2.1-aarch64-deb8-linux.tar.xz)           echo "61dab9c95ef9f9af8bce7338863fda3e42945eb46194b12d922b6d0dc245d0c2" ;;
-    ghc-8.2.1-armv7-deb8-linux.tar.xz)             echo "0f0e5e1d4fad3fa1a87ca1fe0d19242f4a94d158b7b8a08f99efefd98b51b019" ;;
-    ghc-8.2.1-i386-deb7-linux.tar.xz)              echo "a35f9f18381ce7b0a97a674cb76d206cc52ffb7e2967b60b8fef3afac53c454f" ;;
-    ghc-8.2.1-i386-deb8-linux.tar.xz)              echo "d86f9c157dd4161a8acb14062c131c8985a4f65fc856603c373502be1d50c95e" ;;
-    ghc-8.2.1-i386-unknown-mingw32.tar.xz)         echo "26de56a7e72ef8b88d096f7a1f5a918a478f4436dd7628b35577bd31121adb0f" ;;
-    ghc-8.2.1-x86_64-apple-darwin.tar.xz)          echo "900c802025fb630060dbd30f9738e5d107a4ca5a50d5c1262cd3e69fe4467188" ;;
-    ghc-8.2.1-x86_64-centos67-linux.tar.xz)        echo "88ea8d351cf1ed7d93ac6618c8114d08c6402676fe9b7cd8d02dc1365cb52fd1" ;;
-    ghc-8.2.1-x86_64-deb7-linux.tar.xz)            echo "d5fb718f8eb7f7b481e67769dd14c6266389b8fc4b28118a0947bbfe5feb6c13" ;;
-    ghc-8.2.1-x86_64-deb8-linux-dwarf.tar.xz)      echo "b49e58149a1ac220caeaf7baff48b9e8bcbdc85dd5cb366563f86edec032e7a9" ;;
-    ghc-8.2.1-x86_64-deb8-linux.tar.xz)            echo "543b81bf610240bd0398111d6c6607a9094dc2d159b564057d46c8a3d1aaa130" ;;
-    ghc-8.2.1-x86_64-openbsd60-openbsd.tar.xz)     echo "a36906bf9fe86c92d3f13158d334fb6f65958c101c971421e13b6e3937c9a5b4" ;;
-    ghc-8.2.1-x86_64-openbsd61-openbsd.tar.xz)     echo "0dc67669a386a3e82d88f864314d48727c39c620739069f6981d6db26dc11c32" ;;
-    ghc-8.2.1-x86_64-portbld10_3-freebsd.tar.xz)   echo "e0afaf2bde35982d76517cfa9ed35a32b9d049063bfb4c7b656ba74c10dcd9c7" ;;
-    ghc-8.2.1-x86_64-portbld11-freebsd.tar.xz)     echo "4b1a997d64ef7939a1db1b789c034518bc329156e92a28686caad2d0e9a34408" ;;
-    ghc-8.2.1-x86_64-unknown-mingw32.tar.xz)       echo "0f19afb19ae209cd632205c6821dde9c1991ef4e0ee9bca35d2d7a0e61c2b377" ;;
-    ghc-8.2.2-aarch64-deb8-linux.tar.xz)           echo "676698b0b3744af80a610d9e18e40735b9cf8ec337c072d8314d85cba8af4acc" ;;
-    ghc-8.2.2-armv7-deb8-linux.tar.xz)             echo "86e8d339c763575a9dba097fb1d8e17b9622156b7cede888187615682b46bbca" ;;
-    ghc-8.2.2-i386-deb7-linux.tar.xz)              echo "cd18766b1a9b74fc6c90003a719ecab158f281f9a755d8b1bd3fd764ba6947b5" ;;
-    ghc-8.2.2-i386-deb8-linux.tar.xz)              echo "9e67d72d76482e0ba91c718e727b00386a1a12a32ed719714976dc56ca8c8223" ;;
-    ghc-8.2.2-i386-unknown-mingw32.tar.xz)         echo "6b79c96825ccf99878342b228e132b62e46e8303c4ef76e46450de42e5825bea" ;;
-    ghc-8.2.2-powerpc-ibm-aix7.1.0.0.tar.xz)       echo "26b1f6c895d996d4e446929294d6a562449b5e9fa0cf2399d969c4929524aff2" ;;
-    ghc-8.2.2-x86_64-apple-darwin.tar.xz)          echo "f90fcf62f7e0936a6dfc3601cf663729bfe9bbf85097d2d75f0a16f8c2e95c27" ;;
-    ghc-8.2.2-x86_64-centos67-linux.tar.xz)        echo "789fee2f21daa1a4d0bdef282d4e5aa9683405085a61fb968e65dc95f64e9e03" ;;
-    ghc-8.2.2-x86_64-deb7-linux.tar.xz)            echo "cd7afbca54edf9890da9f432c63366556246c85c1198e40c99df5af01c555834" ;;
-    ghc-8.2.2-x86_64-deb8-linux-dwarf.tar.xz)      echo "0fbe1e313653e922724e1de4b32db1744e3b1d6216ce4173680f84b2c06d9881" ;;
-    ghc-8.2.2-x86_64-deb8-linux.tar.xz)            echo "48e205c62b9dc1ccf6739a4bc15a71e56dde2f891a9d786a1b115f0286111b2a" ;;
-    ghc-8.2.2-x86_64-portbld10_3-freebsd.tar.xz)   echo "9e99aaeaec4b2c6d660d80246c0d4dbd41fda88f1eb7a908b29dc8fa8d663949" ;;
-    ghc-8.2.2-x86_64-portbld11-freebsd.tar.xz)     echo "cd351c704b92b9af23994024df07de8ca7090ea7675d5c8b14b2be857a46d804" ;;
-    ghc-8.2.2-x86_64-unknown-linux.tar.xz)         echo "cd7afbca54edf9890da9f432c63366556246c85c1198e40c99df5af01c555834" ;;
-    ghc-8.2.2-x86_64-unknown-mingw32.tar.xz)       echo "1e033df2092aa546e763e7be63167720b32df64f76673ea1ce7ae7c9f564b223" ;;
+    ghc-8.0.1-armv7-deb8-linux.tar.xz)                echo "b905ddac02e14bb44365898918d8c727f50cba556757483d53c54874b5a4fd64" ;;
+    ghc-8.0.1-i386-centos67-linux.tar.xz)             echo "f6167a688cfe1f4ae753875bdbe5a5adf85d786670eb5eb4cd09cd5b306fff48" ;;
+    ghc-8.0.1-i386-deb7-linux.tar.xz)                 echo "ae17c19ec9731dbf963fe2fe465a5d7cb1e13c73c6a1a12b04ef79990cb5507f" ;;
+    ghc-8.0.1-i386-deb8-linux.tar.xz)                 echo "81c27c59f4c4efd7458f308d6a8e130b67c6c156999b78bad42caf78a7453ab1" ;;
+    ghc-8.0.1-i386-portbld-freebsd.tar.xz)            echo "4cf998635a967575f7447eb2bfbb1e23ecf4ee80c34eef744f185b734d1dec54" ;;
+    ghc-8.0.1-i386-unknown-mingw32-win10.tar.xz)      echo "cd77cf5d887c6f1e5a65c1cb9c703753f837fd51855be5583b812200e3f0ff0d" ;;
+    ghc-8.0.1-i386-unknown-mingw32.tar.xz)            echo "82c32832db2551b9c77c173486b1ba1e87016c71898153a878bf4efee901dee3" ;;
+    ghc-8.0.1-i386-unknown-solaris2.11.tar.xz)        echo "6c88a534595361340a06a6b2e495c9107f8dbf6284ab704e3e49a62718d49e20" ;;
+    ghc-8.0.1-powerpc-ibm-aix7.1.0.0.tar.xz)          echo "89f483709eda47f267f6f387461c72ae3365d852c40b29ed035d20efc70be29e" ;;
+    ghc-8.0.1-powerpc64-unknown-linux.tar.xz)         echo "e64c607bd01a50e017b24b610e11b755e6ed1ca791edc0aed061f027801f051c" ;;
+    ghc-8.0.1-sparc-sun-solaris2.11.tar.xz)           echo "5270414303e9e6fe728a6bac82afe5757e9f40588a2d831b175594a2efc0b644" ;;
+    ghc-8.0.1-x86_64-apple-darwin.tar.xz)             echo "06ec33056b927da5e68055147f165f873088f6812fe0c642c4c78c9a449fbc42" ;;
+    ghc-8.0.1-x86_64-centos67-linux.tar.xz)           echo "63b4a361dfc124c5d60945718e866475a96cbe6787da620d4778a6c4f9065a3f" ;;
+    ghc-8.0.1-x86_64-deb7-linux.tar.xz)               echo "86a8109dfa4ec000e0048ed9d072c0d232affeb1069ca96b3995cb5cef2230a7" ;;
+    ghc-8.0.1-x86_64-deb8-linux.tar.xz)               echo "b1c06af49b29521d5b122ef3311f5843e342db8b1769ea7c602cc16d66098ced" ;;
+    ghc-8.0.1-x86_64-portbld-freebsd.tar.xz)          echo "a305c40db0dbc9f9dc522e5131ab18f5d8daf932df890e94a47be2c1bdc944bc" ;;
+    ghc-8.0.1-x86_64-unknown-mingw32-win10.tar.xz)    echo "b466f91c5943966142390c0ef0bf52a5c9e7c6e1396c6145b64a51d6c28cde2b" ;;
+    ghc-8.0.1-x86_64-unknown-mingw32.tar.xz)          echo "a2fd8bdd53dbee7f2f8ac57409b5f07279d4ee52c1ae3a324baac3b8927aed68" ;;
+    ghc-8.0.1-x86_64-unknown-openbsd5.9.tar.xz)       echo "bb98f9df1ec718f6dba3931565a073af442dc9ceef83377c26bdd2eb47f6c6c3" ;;
+    ghc-8.0.1-x86_64-unknown-solaris2.11.tar.xz)      echo "ab2692b99775eb7746fe9182426585c496cf09c3102086f1086563dd4bb496dc" ;;
+    ghc-8.0.2-armv7-deb8-linux.tar.xz)                echo "68615e5f6bdad14c5fe106b05357100b162f589382b22c96ef86656caf71d199" ;;
+    ghc-8.0.2-i386-centos67-linux.tar.xz)             echo "829b5d973d75a868e19ad38409df3b491bc9703949a04486882f04b15a7bfbd9" ;;
+    ghc-8.0.2-i386-deb7-linux.tar.xz)                 echo "07ead3a49f8c9df4b429e7a2f96f6f31bcab8d3ff8277a9aed0201d13ddad448" ;;
+    ghc-8.0.2-i386-deb8-linux.tar.xz)                 echo "818621342a2161b8afcc995a0765816bb40aefbfa1db2c8a7d59c04d8b18228a" ;;
+    ghc-8.0.2-i386-portbld-freebsd.tar.xz)            echo "059430cee15b526c12af6aa214a72f1a2b3aebce6b8f7af15ae1c8217a1d247c" ;;
+    ghc-8.0.2-i386-unknown-mingw32-win10.tar.xz)      echo "ecacba03da214a7d3d7758b8dc2a8ebd48f4c8e255f87862df156d38ec2c0876" ;;
+    ghc-8.0.2-i386-unknown-mingw32.tar.xz)            echo "328b7d4395f4802118054e03c099218b99d0ebb141326964e1c3e591924a1f31" ;;
+    ghc-8.0.2-i386-unknown-solaris2.tar.xz)           echo "1554ae98e60f816c4d507fc5b824a67feaafc2f31b7387479511a26eeee8c2a0" ;;
+    ghc-8.0.2-powerpc-ibm-aix7.1.0.0.tar.xz)          echo "f2907c9a10d1f91a499699e0e6bfe3f385cffc34e39454e1297eb9a391505182" ;;
+    ghc-8.0.2-x86_64-apple-darwin.tar.xz)             echo "ff50a2df9f002f33b9f09717ebf5ec5a47906b9b65cc57b1f9849f8b2e06788d" ;;
+    ghc-8.0.2-x86_64-centos67-linux.tar.xz)           echo "145f12323c869f65c79f7c2d2b6dadfd3d9bad8739ef56580b38f715a6dbbb76" ;;
+    ghc-8.0.2-x86_64-deb7-linux.tar.xz)               echo "b2f5c304b57ac5840a0d2ef763a3c6fa858c70840f749cfad12ed227da973c0a" ;;
+    ghc-8.0.2-x86_64-deb8-linux.tar.xz)               echo "5ee68290db00ca0b79d57bc3a5bdce470de9ce9da0b098a7ce6c504605856c8f" ;;
+    ghc-8.0.2-x86_64-portbld-freebsd.tar.xz)          echo "b36a20e5cae24d70bbb6116ae486f21811e9384f15d3892d260f02fba3e3bb8c" ;;
+    ghc-8.0.2-x86_64-unknown-mingw32-win10.tar.xz)    echo "e433e1c5e7029242245cf877ceb79ed30d404feeb1b6db0b2a4b45d25da8e49c" ;;
+    ghc-8.0.2-x86_64-unknown-mingw32.tar.xz)          echo "8c42c1f4af995205b9816a1e97e2752fe758544c1f5fe77958cdcd319c9c2d53" ;;
+    ghc-8.0.2-x86_64-unknown-openbsd.tar.xz)          echo "591493d2ceaba90caee88989508350b844af4fe78e7f8a88cfef60d23688d9a6" ;;
+    ghc-8.2.1-aarch64-deb8-linux.tar.xz)              echo "61dab9c95ef9f9af8bce7338863fda3e42945eb46194b12d922b6d0dc245d0c2" ;;
+    ghc-8.2.1-armv7-deb8-linux.tar.xz)                echo "0f0e5e1d4fad3fa1a87ca1fe0d19242f4a94d158b7b8a08f99efefd98b51b019" ;;
+    ghc-8.2.1-i386-deb7-linux.tar.xz)                 echo "a35f9f18381ce7b0a97a674cb76d206cc52ffb7e2967b60b8fef3afac53c454f" ;;
+    ghc-8.2.1-i386-deb8-linux.tar.xz)                 echo "d86f9c157dd4161a8acb14062c131c8985a4f65fc856603c373502be1d50c95e" ;;
+    ghc-8.2.1-i386-unknown-mingw32.tar.xz)            echo "26de56a7e72ef8b88d096f7a1f5a918a478f4436dd7628b35577bd31121adb0f" ;;
+    ghc-8.2.1-x86_64-apple-darwin.tar.xz)             echo "900c802025fb630060dbd30f9738e5d107a4ca5a50d5c1262cd3e69fe4467188" ;;
+    ghc-8.2.1-x86_64-centos67-linux.tar.xz)           echo "88ea8d351cf1ed7d93ac6618c8114d08c6402676fe9b7cd8d02dc1365cb52fd1" ;;
+    ghc-8.2.1-x86_64-deb7-linux.tar.xz)               echo "d5fb718f8eb7f7b481e67769dd14c6266389b8fc4b28118a0947bbfe5feb6c13" ;;
+    ghc-8.2.1-x86_64-deb8-linux-dwarf.tar.xz)         echo "b49e58149a1ac220caeaf7baff48b9e8bcbdc85dd5cb366563f86edec032e7a9" ;;
+    ghc-8.2.1-x86_64-deb8-linux.tar.xz)               echo "543b81bf610240bd0398111d6c6607a9094dc2d159b564057d46c8a3d1aaa130" ;;
+    ghc-8.2.1-x86_64-openbsd60-openbsd.tar.xz)        echo "a36906bf9fe86c92d3f13158d334fb6f65958c101c971421e13b6e3937c9a5b4" ;;
+    ghc-8.2.1-x86_64-openbsd61-openbsd.tar.xz)        echo "0dc67669a386a3e82d88f864314d48727c39c620739069f6981d6db26dc11c32" ;;
+    ghc-8.2.1-x86_64-portbld10_3-freebsd.tar.xz)      echo "e0afaf2bde35982d76517cfa9ed35a32b9d049063bfb4c7b656ba74c10dcd9c7" ;;
+    ghc-8.2.1-x86_64-portbld11-freebsd.tar.xz)        echo "4b1a997d64ef7939a1db1b789c034518bc329156e92a28686caad2d0e9a34408" ;;
+    ghc-8.2.1-x86_64-unknown-mingw32.tar.xz)          echo "0f19afb19ae209cd632205c6821dde9c1991ef4e0ee9bca35d2d7a0e61c2b377" ;;
+    ghc-8.2.2-aarch64-deb8-linux.tar.xz)              echo "676698b0b3744af80a610d9e18e40735b9cf8ec337c072d8314d85cba8af4acc" ;;
+    ghc-8.2.2-armv7-deb8-linux.tar.xz)                echo "86e8d339c763575a9dba097fb1d8e17b9622156b7cede888187615682b46bbca" ;;
+    ghc-8.2.2-i386-deb7-linux.tar.xz)                 echo "cd18766b1a9b74fc6c90003a719ecab158f281f9a755d8b1bd3fd764ba6947b5" ;;
+    ghc-8.2.2-i386-deb8-linux.tar.xz)                 echo "9e67d72d76482e0ba91c718e727b00386a1a12a32ed719714976dc56ca8c8223" ;;
+    ghc-8.2.2-i386-unknown-mingw32.tar.xz)            echo "6b79c96825ccf99878342b228e132b62e46e8303c4ef76e46450de42e5825bea" ;;
+    ghc-8.2.2-powerpc-ibm-aix7.1.0.0.tar.xz)          echo "26b1f6c895d996d4e446929294d6a562449b5e9fa0cf2399d969c4929524aff2" ;;
+    ghc-8.2.2-x86_64-apple-darwin.tar.xz)             echo "f90fcf62f7e0936a6dfc3601cf663729bfe9bbf85097d2d75f0a16f8c2e95c27" ;;
+    ghc-8.2.2-x86_64-centos67-linux.tar.xz)           echo "789fee2f21daa1a4d0bdef282d4e5aa9683405085a61fb968e65dc95f64e9e03" ;;
+    ghc-8.2.2-x86_64-deb7-linux.tar.xz)               echo "cd7afbca54edf9890da9f432c63366556246c85c1198e40c99df5af01c555834" ;;
+    ghc-8.2.2-x86_64-deb8-linux-dwarf.tar.xz)         echo "0fbe1e313653e922724e1de4b32db1744e3b1d6216ce4173680f84b2c06d9881" ;;
+    ghc-8.2.2-x86_64-deb8-linux.tar.xz)               echo "48e205c62b9dc1ccf6739a4bc15a71e56dde2f891a9d786a1b115f0286111b2a" ;;
+    ghc-8.2.2-x86_64-portbld10_3-freebsd.tar.xz)      echo "9e99aaeaec4b2c6d660d80246c0d4dbd41fda88f1eb7a908b29dc8fa8d663949" ;;
+    ghc-8.2.2-x86_64-portbld11-freebsd.tar.xz)        echo "cd351c704b92b9af23994024df07de8ca7090ea7675d5c8b14b2be857a46d804" ;;
+    ghc-8.2.2-x86_64-unknown-linux.tar.xz)            echo "cd7afbca54edf9890da9f432c63366556246c85c1198e40c99df5af01c555834" ;;
+    ghc-8.2.2-x86_64-unknown-mingw32.tar.xz)          echo "1e033df2092aa546e763e7be63167720b32df64f76673ea1ce7ae7c9f564b223" ;;
+    ghc-8.4.0.20180118-i386-deb8-linux.tar.xz)        echo "be1a3b5de9f671199533d22f2810d9b62c6392b32b39833cd384a094566703c6" ;;
+    ghc-8.4.0.20180118-i386-unknown-mingw32.tar.xz)   echo "3f4b9291ad35d89ca7b3561312a4329545aedceb5c4c8c5c4cf01550037376a1" ;;
+    ghc-8.4.0.20180118-x86_64-apple-darwin.tar.xz)    echo "b3119b255ab3d1a09fcf9919bddbbe2cd77f9175de14e4b23f20b40abe5edea1" ;;
+    ghc-8.4.0.20180118-x86_64-deb8-linux.tar.xz)      echo "55b54bce14661c19288c3413b8fab95d2b7fae407986323c7f0b6a732bec6a38" ;;
+    ghc-8.4.0.20180118-x86_64-fedora27-linux.tar.xz)  echo "47c7e4350c9560f984bde75b243aa10c91e37494152d87d20f84fcee857338ef" ;;
+    ghc-8.4.0.20180118-x86_64-unknown-mingw32.tar.xz) echo "93dd7f80e3c645b79a91f3023046144ec88927961a3443019034e2893de43752" ;;
+
     *) exit 1 ;;
   esac
 }
@@ -120,8 +127,9 @@ case "$GHCVER" in
   "8.0.2") ;;
   "8.2.1") ;;
   "8.2.2") ;;
+  "8.4.0") GHCVER="8.4.0.20180118" ;;
   *)
-    echo "$GHCVER ∉ {8.0.1, 8.0.2, 8.2.1, 8.2.2}"
+    echo "$GHCVER ∉ {8.0.1, 8.0.2, 8.2.1, 8.2.2, 8.4.0}"
     exit 1
     ;;
 esac
@@ -459,6 +467,27 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
         esac
       fi
       ;;
+    8.4.0.20180118)
+      echo "(I don't know about this machine, please file an issue.)"
+      echo ""
+      echo "1) ghc-8.4.0.20180118-i386-deb8-linux.tar.xz"
+      echo "2) ghc-8.4.0.20180118-i386-unknown-mingw32.tar.xz"
+      echo "3) ghc-8.4.0.20180118-x86_64-apple-darwin.tar.xz"
+      echo "4) ghc-8.4.0.20180118-x86_64-deb8-linux.tar.xz"
+      echo "5) ghc-8.4.0.20180118-x86_64-fedora27-linux.tar.xz"
+      echo "6) ghc-8.4.0.20180118-x86_64-unknown-mingw32.tar.xz"
+      echo ""
+      read -r -p "> " INPUT
+      case "$INPUT" in
+        1) GHCTARBALL="ghc-8.4.0.20180118-i386-deb8-linux.tar.xz" ;;
+        2) GHCTARBALL="ghc-8.4.0.20180118-i386-unknown-mingw32.tar.xz" ;;
+        3) GHCTARBALL="ghc-8.4.0.20180118-x86_64-apple-darwin.tar.xz" ;;
+        4) GHCTARBALL="ghc-8.4.0.20180118-x86_64-deb8-linux.tar.xz" ;;
+        5) GHCTARBALL="ghc-8.4.0.20180118-x86_64-fedora27-linux.tar.xz" ;;
+        6) GHCTARBALL="ghc-8.4.0.20180118-x86_64-unknown-mingw32.tar.xz" ;;
+        *) exit 1 ;;
+      esac
+      ;;
     *)
       exit 1
       ;;
@@ -490,7 +519,14 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
       echo "\nMissing: wget" >&2
       exit 1
     fi
-    wget "https://downloads.haskell.org/~ghc/$GHCVER/$GHCTARBALL" >"$HOME/.ghc-switch/log" 2>&1
+    case "$GHCVER" in
+      8.4.0.20180118)
+        wget "https://downloads.haskell.org/~ghc/8.4.1-alpha2/$GHCTARBALL" >"$HOME/.ghc-switch/log" 2>&1
+        ;;
+      *)
+        wget "https://downloads.haskell.org/~ghc/$GHCVER/$GHCTARBALL" >"$HOME/.ghc-switch/log" 2>&1
+        ;;
+    esac
 
     if [ $(sha256 "$GHCTARBALL") != $(ghcTarballSha256) ]; then
       exit 1
