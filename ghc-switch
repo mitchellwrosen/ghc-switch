@@ -29,6 +29,17 @@ sha256() {
 # Returns the SHA256 of $GHCTARBALL.
 ghcTarballSha256() {
   case "$GHCTARBALL" in
+    ghc-7.6.3-i386-apple-darwin.tar.bz2)              echo "b212acd6ef99df87a4a6f2fb68b1de35071527889743bbd69b9c9ab2d301b178" ;;
+    ghc-7.6.3-i386-unknown-freebsd.tar.bz2)           echo "8f2fbedb7c562fe9629bf7e5caa185f41c5abeeeb489e6381a51e452cedfda13" ;;
+    ghc-7.6.3-i386-unknown-linux.tar.bz2)             echo "eb9bd2ca86c72c7f2ba9f2301e2ae04c44aa4828cf1180548619aa4c040a7ff0" ;;
+    ghc-7.6.3-i386-unknown-mingw32-win10.tar.xz)      echo "98d88a9a281f0bba282624424ca01c493dbffd38bfa8af637dc701904fd3821d" ;;
+    ghc-7.6.3-i386-unknown-mingw32.tar.bz2)           echo "6684b47084ebba68dac591eeebe5660e564d4684db7a7eed9428538df90c0dd3" ;;
+    ghc-7.6.3-src.tar.bz2)                            echo "bd43823d31f6b5d0b2ca7b74151a8f98336ab0800be85f45bb591c9c26aac998" ;;
+    ghc-7.6.3-x86_64-apple-darwin.tar.bz2)            echo "f7a35bea69b6cae798c5f603471a53b43c4cc5feeeeb71733815db6e0a280945" ;;
+    ghc-7.6.3-x86_64-unknown-freebsd.tar.bz2)         echo "a80d564d57f6ad963ef93aac9e746921481635331e4ca1156c8919180af5632b" ;;
+    ghc-7.6.3-x86_64-unknown-linux.tar.bz2)           echo "398dd5fa6ed479c075ef9f638ef4fc2cc0fbf994e1b59b54d77c26a8e1e73ca0" ;;
+    ghc-7.6.3-x86_64-unknown-mingw32.tar.bz2)         echo "10377a4b78cd9917f2a8d5bfabe4e2824e5e331395e0a768896bcb4f042f8695" ;;
+    ghc-7.8.4-x86_64-unknown-linux-deb7.tar.xz)       echo "f62e00e93a5ac16ebfe97cd7cb8cde6c6f3156073d4918620542be3e0ad55f8d" ;;
     ghc-8.0.1-armv7-deb8-linux.tar.xz)                echo "b905ddac02e14bb44365898918d8c727f50cba556757483d53c54874b5a4fd64" ;;
     ghc-8.0.1-i386-centos67-linux.tar.xz)             echo "f6167a688cfe1f4ae753875bdbe5a5adf85d786670eb5eb4cd09cd5b306fff48" ;;
     ghc-8.0.1-i386-deb7-linux.tar.xz)                 echo "ae17c19ec9731dbf963fe2fe465a5d7cb1e13c73c6a1a12b04ef79990cb5507f" ;;
@@ -123,13 +134,15 @@ KERNEL=$(uname -s)
 GHCVER=$1
 
 case "$GHCVER" in
+  "7.6.3") ;;
+  "7.8.4") ;;
   "8.0.1") ;;
   "8.0.2") ;;
   "8.2.1") ;;
   "8.2.2") ;;
   "8.4.0") GHCVER="8.4.0.20180118" ;;
   *)
-    echo "$GHCVER ∉ {8.0.1, 8.0.2, 8.2.1, 8.2.2, 8.4.0}"
+    echo "$GHCVER ∉ {7.6.3, 7.8.4, 8.0.1, 8.0.2, 8.2.1, 8.2.2, 8.4.0}"
     exit 1
     ;;
 esac
@@ -146,6 +159,38 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
   # Here we attempt to be nice and pare down the list of binary distributions,
   # but fall back to a manual selection.
   case "$GHCVER" in
+    7.6.3)
+      echo "(I don't know about this machine, please file an issue.)"
+      echo ""
+      echo " 1) ghc-7.6.3-i386-apple-darwin.tar.bz2"
+      echo " 2) ghc-7.6.3-i386-unknown-freebsd.tar.bz2"
+      echo " 3) ghc-7.6.3-i386-unknown-linux.tar.bz2"
+      echo " 4) ghc-7.6.3-i386-unknown-mingw32-win10.tar.xz"
+      echo " 5) ghc-7.6.3-i386-unknown-mingw32.tar.bz2"
+      echo " 6) ghc-7.6.3-src.tar.bz2"
+      echo " 7) ghc-7.6.3-x86_64-apple-darwin.tar.bz2"
+      echo " 8) ghc-7.6.3-x86_64-unknown-freebsd.tar.bz2"
+      echo " 9) ghc-7.6.3-x86_64-unknown-linux.tar.bz2"
+      echo "10) ghc-7.6.3-x86_64-unknown-mingw32.tar.bz2"
+      echo ""
+      read -r -p "> " INPUT
+      case "$INPUT" in
+        1) GHCTARBALL="ghc-7.6.3-i386-apple-darwin.tar.bz2" ;;
+        2) GHCTARBALL="ghc-7.6.3-i386-unknown-freebsd.tar.bz2" ;;
+        3) GHCTARBALL="ghc-7.6.3-i386-unknown-linux.tar.bz2" ;;
+        4) GHCTARBALL="ghc-7.6.3-i386-unknown-mingw32-win10.tar.xz" ;;
+        5) GHCTARBALL="ghc-7.6.3-i386-unknown-mingw32.tar.bz2" ;;
+        6) GHCTARBALL="ghc-7.6.3-src.tar.bz2" ;;
+        7) GHCTARBALL="ghc-7.6.3-x86_64-apple-darwin.tar.bz2" ;;
+        8) GHCTARBALL="ghc-7.6.3-x86_64-unknown-freebsd.tar.bz2" ;;
+        9) GHCTARBALL="ghc-7.6.3-x86_64-unknown-linux.tar.bz2" ;;
+        10) GHCTARBALL="ghc-7.6.3-x86_64-unknown-mingw32.tar.bz2" ;;
+        *) exit 1 ;;
+      esac
+      ;;
+    7.8.4)
+      GHCTARBALL="ghc-7.8.4-x86_64-unknown-linux-deb7.tar.xz"
+      ;;
     8.0.1)
       case "$MACHINE" in
         amd64|x86_64)
