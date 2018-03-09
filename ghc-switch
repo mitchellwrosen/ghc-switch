@@ -40,6 +40,7 @@ ghcTarballSha256() {
     ghc-7.6.3-x86_64-unknown-linux.tar.bz2)           echo "398dd5fa6ed479c075ef9f638ef4fc2cc0fbf994e1b59b54d77c26a8e1e73ca0" ;;
     ghc-7.6.3-x86_64-unknown-mingw32.tar.bz2)         echo "10377a4b78cd9917f2a8d5bfabe4e2824e5e331395e0a768896bcb4f042f8695" ;;
     ghc-7.8.4-x86_64-unknown-linux-deb7.tar.xz)       echo "f62e00e93a5ac16ebfe97cd7cb8cde6c6f3156073d4918620542be3e0ad55f8d" ;;
+    ghc-7.10.3-x86_64-deb8-linux.tar.xz)              echo "b478e282afbf489614d0133ef698ba44e901eeb1794f4453c0fb0807cd271b96" ;;
     ghc-8.0.1-armv7-deb8-linux.tar.xz)                echo "b905ddac02e14bb44365898918d8c727f50cba556757483d53c54874b5a4fd64" ;;
     ghc-8.0.1-i386-centos67-linux.tar.xz)             echo "f6167a688cfe1f4ae753875bdbe5a5adf85d786670eb5eb4cd09cd5b306fff48" ;;
     ghc-8.0.1-i386-deb7-linux.tar.xz)                 echo "ae17c19ec9731dbf963fe2fe465a5d7cb1e13c73c6a1a12b04ef79990cb5507f" ;;
@@ -136,13 +137,14 @@ GHCVER=$1
 case "$GHCVER" in
   "7.6.3") ;;
   "7.8.4") ;;
+  "7.10.3") ;;
   "8.0.1") ;;
   "8.0.2") ;;
   "8.2.1") ;;
   "8.2.2") ;;
   "8.4.0") GHCVER="8.4.0.20180118" ;;
   *)
-    echo "$GHCVER ∉ {7.6.3, 7.8.4, 8.0.1, 8.0.2, 8.2.1, 8.2.2, 8.4.0}"
+    echo "$GHCVER ∉ {7.6.3, 7.8.4, 7.10.3, 8.0.1, 8.0.2, 8.2.1, 8.2.2, 8.4.0}"
     exit 1
     ;;
 esac
@@ -189,7 +191,26 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
       esac
       ;;
     7.8.4)
-      GHCTARBALL="ghc-7.8.4-x86_64-unknown-linux-deb7.tar.xz"
+      echo "(I don't know about this machine, please file an issue.)"
+      echo ""
+      echo " 1) ghc-7.8.4-x86_64-unknown-linux-deb7.tar.xz"
+      echo ""
+      read -r -p "> " INPUT
+      case "$INPUT" in
+        1) GHCTARBALL="ghc-7.8.4-x86_64-unknown-linux-deb7.tar.xz" ;;
+        *) exit 1 ;;
+      esac
+      ;;
+    7.10.3)
+      echo "(I don't know about this machine, please file an issue.)"
+      echo ""
+      echo " 1) ghc-7.10.3-x86_64-deb8-linux.tar.xz"
+      echo ""
+      read -r -p "> " INPUT
+      case "$INPUT" in
+        1) GHCTARBALL="ghc-7.10.3-x86_64-deb8-linux.tar.xz" ;;
+        *) exit 1 ;;
+      esac
       ;;
     8.0.1)
       case "$MACHINE" in
