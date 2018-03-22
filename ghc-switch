@@ -39,8 +39,11 @@ ghcTarballSha256() {
     ghc-7.6.3-x86_64-unknown-freebsd.tar.bz2)         echo "a80d564d57f6ad963ef93aac9e746921481635331e4ca1156c8919180af5632b" ;;
     ghc-7.6.3-x86_64-unknown-linux.tar.bz2)           echo "398dd5fa6ed479c075ef9f638ef4fc2cc0fbf994e1b59b54d77c26a8e1e73ca0" ;;
     ghc-7.6.3-x86_64-unknown-mingw32.tar.bz2)         echo "10377a4b78cd9917f2a8d5bfabe4e2824e5e331395e0a768896bcb4f042f8695" ;;
+
     ghc-7.8.4-x86_64-unknown-linux-deb7.tar.xz)       echo "f62e00e93a5ac16ebfe97cd7cb8cde6c6f3156073d4918620542be3e0ad55f8d" ;;
+
     ghc-7.10.3-x86_64-deb8-linux.tar.xz)              echo "b478e282afbf489614d0133ef698ba44e901eeb1794f4453c0fb0807cd271b96" ;;
+
     ghc-8.0.1-armv7-deb8-linux.tar.xz)                echo "b905ddac02e14bb44365898918d8c727f50cba556757483d53c54874b5a4fd64" ;;
     ghc-8.0.1-i386-centos67-linux.tar.xz)             echo "f6167a688cfe1f4ae753875bdbe5a5adf85d786670eb5eb4cd09cd5b306fff48" ;;
     ghc-8.0.1-i386-deb7-linux.tar.xz)                 echo "ae17c19ec9731dbf963fe2fe465a5d7cb1e13c73c6a1a12b04ef79990cb5507f" ;;
@@ -61,6 +64,7 @@ ghcTarballSha256() {
     ghc-8.0.1-x86_64-unknown-mingw32.tar.xz)          echo "a2fd8bdd53dbee7f2f8ac57409b5f07279d4ee52c1ae3a324baac3b8927aed68" ;;
     ghc-8.0.1-x86_64-unknown-openbsd5.9.tar.xz)       echo "bb98f9df1ec718f6dba3931565a073af442dc9ceef83377c26bdd2eb47f6c6c3" ;;
     ghc-8.0.1-x86_64-unknown-solaris2.11.tar.xz)      echo "ab2692b99775eb7746fe9182426585c496cf09c3102086f1086563dd4bb496dc" ;;
+
     ghc-8.0.2-armv7-deb8-linux.tar.xz)                echo "68615e5f6bdad14c5fe106b05357100b162f589382b22c96ef86656caf71d199" ;;
     ghc-8.0.2-i386-centos67-linux.tar.xz)             echo "829b5d973d75a868e19ad38409df3b491bc9703949a04486882f04b15a7bfbd9" ;;
     ghc-8.0.2-i386-deb7-linux.tar.xz)                 echo "07ead3a49f8c9df4b429e7a2f96f6f31bcab8d3ff8277a9aed0201d13ddad448" ;;
@@ -78,6 +82,7 @@ ghcTarballSha256() {
     ghc-8.0.2-x86_64-unknown-mingw32-win10.tar.xz)    echo "e433e1c5e7029242245cf877ceb79ed30d404feeb1b6db0b2a4b45d25da8e49c" ;;
     ghc-8.0.2-x86_64-unknown-mingw32.tar.xz)          echo "8c42c1f4af995205b9816a1e97e2752fe758544c1f5fe77958cdcd319c9c2d53" ;;
     ghc-8.0.2-x86_64-unknown-openbsd.tar.xz)          echo "591493d2ceaba90caee88989508350b844af4fe78e7f8a88cfef60d23688d9a6" ;;
+
     ghc-8.2.1-aarch64-deb8-linux.tar.xz)              echo "61dab9c95ef9f9af8bce7338863fda3e42945eb46194b12d922b6d0dc245d0c2" ;;
     ghc-8.2.1-armv7-deb8-linux.tar.xz)                echo "0f0e5e1d4fad3fa1a87ca1fe0d19242f4a94d158b7b8a08f99efefd98b51b019" ;;
     ghc-8.2.1-i386-deb7-linux.tar.xz)                 echo "a35f9f18381ce7b0a97a674cb76d206cc52ffb7e2967b60b8fef3afac53c454f" ;;
@@ -93,6 +98,7 @@ ghcTarballSha256() {
     ghc-8.2.1-x86_64-portbld10_3-freebsd.tar.xz)      echo "e0afaf2bde35982d76517cfa9ed35a32b9d049063bfb4c7b656ba74c10dcd9c7" ;;
     ghc-8.2.1-x86_64-portbld11-freebsd.tar.xz)        echo "4b1a997d64ef7939a1db1b789c034518bc329156e92a28686caad2d0e9a34408" ;;
     ghc-8.2.1-x86_64-unknown-mingw32.tar.xz)          echo "0f19afb19ae209cd632205c6821dde9c1991ef4e0ee9bca35d2d7a0e61c2b377" ;;
+
     ghc-8.2.2-aarch64-deb8-linux.tar.xz)              echo "676698b0b3744af80a610d9e18e40735b9cf8ec337c072d8314d85cba8af4acc" ;;
     ghc-8.2.2-armv7-deb8-linux.tar.xz)                echo "86e8d339c763575a9dba097fb1d8e17b9622156b7cede888187615682b46bbca" ;;
     ghc-8.2.2-i386-deb7-linux.tar.xz)                 echo "cd18766b1a9b74fc6c90003a719ecab158f281f9a755d8b1bd3fd764ba6947b5" ;;
@@ -108,12 +114,16 @@ ghcTarballSha256() {
     ghc-8.2.2-x86_64-portbld11-freebsd.tar.xz)        echo "cd351c704b92b9af23994024df07de8ca7090ea7675d5c8b14b2be857a46d804" ;;
     ghc-8.2.2-x86_64-unknown-linux.tar.xz)            echo "cd7afbca54edf9890da9f432c63366556246c85c1198e40c99df5af01c555834" ;;
     ghc-8.2.2-x86_64-unknown-mingw32.tar.xz)          echo "1e033df2092aa546e763e7be63167720b32df64f76673ea1ce7ae7c9f564b223" ;;
-    ghc-8.4.0.20180118-i386-deb8-linux.tar.xz)        echo "be1a3b5de9f671199533d22f2810d9b62c6392b32b39833cd384a094566703c6" ;;
-    ghc-8.4.0.20180118-i386-unknown-mingw32.tar.xz)   echo "3f4b9291ad35d89ca7b3561312a4329545aedceb5c4c8c5c4cf01550037376a1" ;;
-    ghc-8.4.0.20180118-x86_64-apple-darwin.tar.xz)    echo "b3119b255ab3d1a09fcf9919bddbbe2cd77f9175de14e4b23f20b40abe5edea1" ;;
-    ghc-8.4.0.20180118-x86_64-deb8-linux.tar.xz)      echo "55b54bce14661c19288c3413b8fab95d2b7fae407986323c7f0b6a732bec6a38" ;;
-    ghc-8.4.0.20180118-x86_64-fedora27-linux.tar.xz)  echo "47c7e4350c9560f984bde75b243aa10c91e37494152d87d20f84fcee857338ef" ;;
-    ghc-8.4.0.20180118-x86_64-unknown-mingw32.tar.xz) echo "93dd7f80e3c645b79a91f3023046144ec88927961a3443019034e2893de43752" ;;
+
+    ghc-8.4.1-aarch64-deb8-linux.tar.xz)              echo "04c313c0574a6f61720d2a0b7839b8b307eb638f009673be51abf669d6357fcd" ;;
+    ghc-8.4.1-i386-deb8-linux.tar.xz)                 echo "c56c589c76c7ddcb77cdbef885a811761e669d3e76868b723d5be56dedcd4f69" ;;
+    ghc-8.4.1-i386-unknown-mingw32.tar.xz)            echo "c543330f9c89f670682541e0ed24e5ec38c53ddffda48367c6e1364367045b0d" ;;
+    ghc-8.4.1-x86_64-apple-darwin.tar.xz)             echo "d774e39f3a0105843efd06709b214ee332c30203e6c5902dd6ed45e36285f9b7" ;;
+    ghc-8.4.1-x86_64-deb8-linux-dwarf.tar.xz)         echo "156ecaa8b4a4d33fa07c25d0ff64c9fb94705f501c7dac6feee6631707129d3c" ;;
+    ghc-8.4.1-x86_64-deb8-linux.tar.xz)               echo "427c77a934b30c3f1de992c38c072afb4323fe6fb30dbac919ca8cb6ae98fbd9" ;;
+    ghc-8.4.1-x86_64-fedora27-linux.tar.xz)           echo "89328a013e64b9b56825a9071fea5616ddd623d37fd41e8fb913dfebc609e7ea" ;;
+    ghc-8.4.1-x86_64-portbld11-freebsd.tar.xz)        echo "e748daec098445c6190090fe32bb2817a1140553be5acd2188e1af05ad24e5aa" ;;
+    ghc-8.4.1-x86_64-unknown-mingw32.tar.xz)          echo "328b013fc651d34e075019107e58bb6c8a578f0155cf3ad4557e6f2661b03131" ;;
 
     *) exit 1 ;;
   esac
@@ -142,9 +152,9 @@ case "$GHCVER" in
   "8.0.2") ;;
   "8.2.1") ;;
   "8.2.2") ;;
-  "8.4.0") GHCVER="8.4.0.20180118" ;;
+  "8.4.1") ;;
   *)
-    echo "$GHCVER ∉ {7.6.3, 7.8.4, 7.10.3, 8.0.1, 8.0.2, 8.2.1, 8.2.2, 8.4.0}"
+    echo "$GHCVER ∉ {7.6.3, 7.8.4, 7.10.3, 8.0.1, 8.0.2, 8.2.1, 8.2.2, 8.4.1}"
     exit 1
     ;;
 esac
@@ -533,26 +543,51 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
         esac
       fi
       ;;
-    8.4.0.20180118)
-      echo "(I don't know about this machine, please file an issue.)"
-      echo ""
-      echo "1) ghc-8.4.0.20180118-i386-deb8-linux.tar.xz"
-      echo "2) ghc-8.4.0.20180118-i386-unknown-mingw32.tar.xz"
-      echo "3) ghc-8.4.0.20180118-x86_64-apple-darwin.tar.xz"
-      echo "4) ghc-8.4.0.20180118-x86_64-deb8-linux.tar.xz"
-      echo "5) ghc-8.4.0.20180118-x86_64-fedora27-linux.tar.xz"
-      echo "6) ghc-8.4.0.20180118-x86_64-unknown-mingw32.tar.xz"
-      echo ""
-      read -r -p "> " INPUT
-      case "$INPUT" in
-        1) GHCTARBALL="ghc-8.4.0.20180118-i386-deb8-linux.tar.xz" ;;
-        2) GHCTARBALL="ghc-8.4.0.20180118-i386-unknown-mingw32.tar.xz" ;;
-        3) GHCTARBALL="ghc-8.4.0.20180118-x86_64-apple-darwin.tar.xz" ;;
-        4) GHCTARBALL="ghc-8.4.0.20180118-x86_64-deb8-linux.tar.xz" ;;
-        5) GHCTARBALL="ghc-8.4.0.20180118-x86_64-fedora27-linux.tar.xz" ;;
-        6) GHCTARBALL="ghc-8.4.0.20180118-x86_64-unknown-mingw32.tar.xz" ;;
-        *) exit 1 ;;
+    8.4.1)
+      case "$MACHINE" in
+        amd64|x86_64)
+          case "$KERNEL" in
+            Darwin)
+              GHCTARBALL="ghc-8.4.1-x86_64-apple-darwin.tar.xz"
+              ;;
+            FreeBSD)
+              case $(uname -r) in
+                11.*)
+                  GHCTARBALL="ghc-8.4.1-x86_64-portbld11-freebsd.tar.xz"
+                  ;;
+              esac
+              ;;
+          esac
+          ;;
       esac
+
+      if [ -z "$GHCTARBALL" ]; then
+        echo "(I don't know about this machine, please file an issue.)"
+        echo ""
+        echo " 1) ghc-8.4.1-aarch64-deb8-linux.tar.xz"
+        echo " 2) ghc-8.4.1-i386-deb8-linux.tar.xz"
+        echo " 3) ghc-8.4.1-i386-unknown-mingw32.tar.xz"
+        echo " 4) ghc-8.4.1-x86_64-apple-darwin.tar.xz"
+        echo " 5) ghc-8.4.1-x86_64-deb8-linux-dwarf.tar.xz"
+        echo " 6) ghc-8.4.1-x86_64-deb8-linux.tar.xz"
+        echo " 7) ghc-8.4.1-x86_64-fedora27-linux.tar.xz"
+        echo " 8) ghc-8.4.1-x86_64-portbld11-freebsd.tar.xz"
+        echo " 9) ghc-8.4.1-x86_64-unknown-mingw32.tar.xz"
+        echo ""
+        read -r -p "> " INPUT
+        case "$INPUT" in
+          1) GHCTARBALL="ghc-8.4.1-aarch64-deb8-linux.tar.xz" ;;
+          2) GHCTARBALL="ghc-8.4.1-i386-deb8-linux.tar.xz" ;;
+          3) GHCTARBALL="ghc-8.4.1-i386-unknown-mingw32.tar.xz" ;;
+          4) GHCTARBALL="ghc-8.4.1-x86_64-apple-darwin.tar.xz" ;;
+          5) GHCTARBALL="ghc-8.4.1-x86_64-deb8-linux-dwarf.tar.xz" ;;
+          6) GHCTARBALL="ghc-8.4.1-x86_64-deb8-linux.tar.xz" ;;
+          7) GHCTARBALL="ghc-8.4.1-x86_64-fedora27-linux.tar.xz" ;;
+          8) GHCTARBALL="ghc-8.4.1-x86_64-portbld11-freebsd.tar.xz" ;;
+          9) GHCTARBALL="ghc-8.4.1-x86_64-unknown-mingw32.tar.xz" ;;
+          *) exit 1 ;;
+        esac
+      fi
       ;;
     *)
       exit 1
@@ -585,14 +620,7 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
       echo "\nMissing: wget" >&2
       exit 1
     fi
-    case "$GHCVER" in
-      8.4.0.20180118)
-        wget "https://downloads.haskell.org/~ghc/8.4.1-alpha2/$GHCTARBALL" >"$HOME/.ghc-switch/log" 2>&1
-        ;;
-      *)
-        wget "https://downloads.haskell.org/~ghc/$GHCVER/$GHCTARBALL" >"$HOME/.ghc-switch/log" 2>&1
-        ;;
-    esac
+    wget "https://downloads.haskell.org/~ghc/$GHCVER/$GHCTARBALL" >"$HOME/.ghc-switch/log" 2>&1
 
     if [ $(sha256 "$GHCTARBALL") != $(ghcTarballSha256) ]; then
       exit 1
