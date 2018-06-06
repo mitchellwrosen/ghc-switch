@@ -125,17 +125,25 @@ ghcTarballSha256() {
     ghc-8.4.1-x86_64-portbld11-freebsd.tar.xz)        echo "e748daec098445c6190090fe32bb2817a1140553be5acd2188e1af05ad24e5aa" ;;
     ghc-8.4.1-x86_64-unknown-mingw32.tar.xz)          echo "328b013fc651d34e075019107e58bb6c8a578f0155cf3ad4557e6f2661b03131" ;;
 
-    ghc-8.4.2-x86_64-deb8-linux.tar.xz)               echo "246f66eb56f4ad0f1c7755502cfc8f9972f2d067dede17e151f6f479c1f76fbd" ;;
-    ghc-8.4.2-i386-unknown-mingw32.tar.xz)            echo "5c3bab299dfa6593d851c84c0a56ccbce668a01dc8993c0fcb8055fffb534bde" ;;
-    ghc-8.4.2-i386-deb8-linux.tar.xz)                 echo "2d849c30b4c1eac25dc74333501920921e22fa483153f404993808bbda93df05" ;;
-    ghc-8.4.2-x86_64-deb9-linux.tar.xz)               echo "3f4f5bbd2cdab4e7015ada9196d8d9b3a1ad274293cef011f85c46854596cb57" ;;
-    ghc-8.4.2-x86_64-fedora27-linux.tar.xz)           echo "d057b5c833596dbe4ae5d0dc2994f6cc5d0f4c2a21ea1d7900821d165fd4e846" ;;
     ghc-8.4.2-aarch64-deb8-linux.tar.xz)              echo "684f8d2f5ddb954719e5c0cc149333e3c0396de9592cbad2b7b78c1547dffadc" ;;
-    ghc-8.4.2-x86_64-unknown-mingw32.tar.xz)          echo "797634aa9812fc6b2084a24ddb4fde44fa83a2f59daea82e0af81ca3dd323fde" ;;
-    ghc-8.4.2-x86_64-portbld-freebsd.tar.xz)          echo "e9ed417fdf94c2ff2c6e344ed16f332bf6b591511f6442c0d9ea94854882b66c" ;;
-    ghc-8.4.2-x86_64-deb8-linux-dwarf.tar.xz)         echo "2bf92004b7d78e4723dfdb58aea24cdb2aed0ea52c15d72a7b998ee45f666372" ;;
+    ghc-8.4.2-i386-deb8-linux.tar.xz)                 echo "2d849c30b4c1eac25dc74333501920921e22fa483153f404993808bbda93df05" ;;
+    ghc-8.4.2-i386-unknown-mingw32.tar.xz)            echo "5c3bab299dfa6593d851c84c0a56ccbce668a01dc8993c0fcb8055fffb534bde" ;;
     ghc-8.4.2-x86_64-apple-darwin.tar.xz)             echo "87469222042b9ac23f9db216a8d4e5107297bdbbb99df71eb4d9e7208455def2" ;;
     ghc-8.4.2-x86_64-centos67-linux.tar.xz)           echo "28c31489ed9a83af4400685ec8bc72a6d43d08958d75b2dc35d29a894a5c9d93" ;;
+    ghc-8.4.2-x86_64-deb8-linux-dwarf.tar.xz)         echo "2bf92004b7d78e4723dfdb58aea24cdb2aed0ea52c15d72a7b998ee45f666372" ;;
+    ghc-8.4.2-x86_64-deb8-linux.tar.xz)               echo "246f66eb56f4ad0f1c7755502cfc8f9972f2d067dede17e151f6f479c1f76fbd" ;;
+    ghc-8.4.2-x86_64-deb9-linux.tar.xz)               echo "3f4f5bbd2cdab4e7015ada9196d8d9b3a1ad274293cef011f85c46854596cb57" ;;
+    ghc-8.4.2-x86_64-fedora27-linux.tar.xz)           echo "d057b5c833596dbe4ae5d0dc2994f6cc5d0f4c2a21ea1d7900821d165fd4e846" ;;
+    ghc-8.4.2-x86_64-portbld-freebsd.tar.xz)          echo "e9ed417fdf94c2ff2c6e344ed16f332bf6b591511f6442c0d9ea94854882b66c" ;;
+    ghc-8.4.2-x86_64-unknown-mingw32.tar.xz)          echo "797634aa9812fc6b2084a24ddb4fde44fa83a2f59daea82e0af81ca3dd323fde" ;;
+
+    ghc-8.4.3-i386-deb8-linux.tar.xz)                 echo "f5763983a26dedd88b65a0b17267359a3981b83a642569b26334423f684f8b8c" ;;
+    ghc-8.4.3-i386-unknown-mingw32.tar.xz)            echo "4c702f123185a52f5cfb86c6d7a189f2223a5fb15775101ff3c5b50acaf166d2" ;;
+    ghc-8.4.3-x86_64-apple-darwin.tar.xz)             echo "af0b455f6c46b9802b4b48dad996619cfa27cc6e2bf2ce5532387b4a8c00aa64" ;;
+    ghc-8.4.3-x86_64-deb8-linux-dwarf.tar.xz)         echo "b9c855754a3007f69db9a434db3e41050d29aa15cba0ec43a942672a9b5f75b7" ;;
+    ghc-8.4.3-x86_64-deb8-linux.tar.xz)               echo "30a402c6d4754a6c020e0547f19ae3ac42e907e35349aa932d347f73e421a8e2" ;;
+    ghc-8.4.3-x86_64-deb9-linux.tar.xz)               echo "2e4f53afb872ad9c640f31aea283b3ff4c5028b65808a1920739900aef7d15c9" ;;
+    ghc-8.4.3-x86_64-unknown-mingw32.tar.xz)          echo "8a83cfbf9ae84de0443c39c93b931693bdf2a6d4bf163ffb41855f80f4bf883e" ;;
 
     *) exit 1 ;;
   esac
@@ -166,8 +174,9 @@ case "$GHCVER" in
   "8.2.2") ;;
   "8.4.1") ;;
   "8.4.2") ;;
+  "8.4.3") ;;
   *)
-    echo "$GHCVER ∉ {7.6.3, 7.8.4, 7.10.3, 8.0.1, 8.0.2, 8.2.1, 8.2.2, 8.4.1, 8.4.2}"
+    echo "$GHCVER ∉ {7.6.3, 7.8.4, 7.10.3, 8.0.1, 8.0.2, 8.2.1, 8.2.2, 8.4.1, 8.4.2, 8.4.3}"
     exit 1
     ;;
 esac
@@ -200,17 +209,17 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
       echo ""
       read -r -p "> " INPUT
       case "$INPUT" in
-        1) GHCTARBALL="ghc-7.6.3-i386-apple-darwin.tar.bz2" ;;
-        2) GHCTARBALL="ghc-7.6.3-i386-unknown-freebsd.tar.bz2" ;;
-        3) GHCTARBALL="ghc-7.6.3-i386-unknown-linux.tar.bz2" ;;
+        1) GHCTARBALL="ghc-7.6.3-i386-apple-darwin.tar.bz2"         ;;
+        2) GHCTARBALL="ghc-7.6.3-i386-unknown-freebsd.tar.bz2"      ;;
+        3) GHCTARBALL="ghc-7.6.3-i386-unknown-linux.tar.bz2"        ;;
         4) GHCTARBALL="ghc-7.6.3-i386-unknown-mingw32-win10.tar.xz" ;;
-        5) GHCTARBALL="ghc-7.6.3-i386-unknown-mingw32.tar.bz2" ;;
-        6) GHCTARBALL="ghc-7.6.3-src.tar.bz2" ;;
-        7) GHCTARBALL="ghc-7.6.3-x86_64-apple-darwin.tar.bz2" ;;
-        8) GHCTARBALL="ghc-7.6.3-x86_64-unknown-freebsd.tar.bz2" ;;
-        9) GHCTARBALL="ghc-7.6.3-x86_64-unknown-linux.tar.bz2" ;;
-        10) GHCTARBALL="ghc-7.6.3-x86_64-unknown-mingw32.tar.bz2" ;;
-        *) exit 1 ;;
+        5) GHCTARBALL="ghc-7.6.3-i386-unknown-mingw32.tar.bz2"      ;;
+        6) GHCTARBALL="ghc-7.6.3-src.tar.bz2"                       ;;
+        7) GHCTARBALL="ghc-7.6.3-x86_64-apple-darwin.tar.bz2"       ;;
+        8) GHCTARBALL="ghc-7.6.3-x86_64-unknown-freebsd.tar.bz2"    ;;
+        9) GHCTARBALL="ghc-7.6.3-x86_64-unknown-linux.tar.bz2"      ;;
+        10) GHCTARBALL="ghc-7.6.3-x86_64-unknown-mingw32.tar.bz2"   ;;
+        *) exit 1                                                   ;;
       esac
       ;;
     7.8.4)
@@ -292,27 +301,27 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
         echo ""
         read -r -p "> " INPUT
         case "$INPUT" in
-          1) GHCTARBALL="ghc-8.0.1-armv7-deb8-linux.tar.xz" ;;
-          2) GHCTARBALL="ghc-8.0.1-i386-centos67-linux.tar.xz" ;;
-          3) GHCTARBALL="ghc-8.0.1-i386-deb7-linux.tar.xz" ;;
-          4) GHCTARBALL="ghc-8.0.1-i386-deb8-linux.tar.xz" ;;
-          5) GHCTARBALL="ghc-8.0.1-i386-portbld-freebsd.tar.xz" ;;
-          6) GHCTARBALL="ghc-8.0.1-i386-unknown-mingw32-win10.tar.xz" ;;
-          7) GHCTARBALL="ghc-8.0.1-i386-unknown-mingw32.tar.xz" ;;
-          8) GHCTARBALL="ghc-8.0.1-i386-unknown-solaris2.11.tar.xz" ;;
-          9) GHCTARBALL="ghc-8.0.1-powerpc-ibm-aix7.1.0.0.tar.xz" ;;
-          10) GHCTARBALL="ghc-8.0.1-powerpc64-unknown-linux.tar.xz" ;;
-          11) GHCTARBALL="ghc-8.0.1-sparc-sun-solaris2.11.tar.xz" ;;
-          12) GHCTARBALL="ghc-8.0.1-x86_64-apple-darwin.tar.xz" ;;
-          13) GHCTARBALL="ghc-8.0.1-x86_64-centos67-linux.tar.xz" ;;
-          14) GHCTARBALL="ghc-8.0.1-x86_64-deb7-linux.tar.xz" ;;
-          15) GHCTARBALL="ghc-8.0.1-x86_64-deb8-linux.tar.xz" ;;
-          16) GHCTARBALL="ghc-8.0.1-x86_64-portbld-freebsd.tar.xz" ;;
+          1) GHCTARBALL="ghc-8.0.1-armv7-deb8-linux.tar.xz"              ;;
+          2) GHCTARBALL="ghc-8.0.1-i386-centos67-linux.tar.xz"           ;;
+          3) GHCTARBALL="ghc-8.0.1-i386-deb7-linux.tar.xz"               ;;
+          4) GHCTARBALL="ghc-8.0.1-i386-deb8-linux.tar.xz"               ;;
+          5) GHCTARBALL="ghc-8.0.1-i386-portbld-freebsd.tar.xz"          ;;
+          6) GHCTARBALL="ghc-8.0.1-i386-unknown-mingw32-win10.tar.xz"    ;;
+          7) GHCTARBALL="ghc-8.0.1-i386-unknown-mingw32.tar.xz"          ;;
+          8) GHCTARBALL="ghc-8.0.1-i386-unknown-solaris2.11.tar.xz"      ;;
+          9) GHCTARBALL="ghc-8.0.1-powerpc-ibm-aix7.1.0.0.tar.xz"        ;;
+          10) GHCTARBALL="ghc-8.0.1-powerpc64-unknown-linux.tar.xz"      ;;
+          11) GHCTARBALL="ghc-8.0.1-sparc-sun-solaris2.11.tar.xz"        ;;
+          12) GHCTARBALL="ghc-8.0.1-x86_64-apple-darwin.tar.xz"          ;;
+          13) GHCTARBALL="ghc-8.0.1-x86_64-centos67-linux.tar.xz"        ;;
+          14) GHCTARBALL="ghc-8.0.1-x86_64-deb7-linux.tar.xz"            ;;
+          15) GHCTARBALL="ghc-8.0.1-x86_64-deb8-linux.tar.xz"            ;;
+          16) GHCTARBALL="ghc-8.0.1-x86_64-portbld-freebsd.tar.xz"       ;;
           17) GHCTARBALL="ghc-8.0.1-x86_64-unknown-mingw32-win10.tar.xz" ;;
-          18) GHCTARBALL="ghc-8.0.1-x86_64-unknown-mingw32.tar.xz" ;;
-          19) GHCTARBALL="ghc-8.0.1-x86_64-unknown-openbsd5.9.tar.xz" ;;
-          20) GHCTARBALL="ghc-8.0.1-x86_64-unknown-solaris2.11.tar.xz" ;;
-          *) exit 1 ;;
+          18) GHCTARBALL="ghc-8.0.1-x86_64-unknown-mingw32.tar.xz"       ;;
+          19) GHCTARBALL="ghc-8.0.1-x86_64-unknown-openbsd5.9.tar.xz"    ;;
+          20) GHCTARBALL="ghc-8.0.1-x86_64-unknown-solaris2.11.tar.xz"   ;;
+          *) exit 1                                                      ;;
         esac
       fi
       ;;
@@ -369,24 +378,24 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
         echo ""
         read -r -p "> " INPUT
         case "$INPUT" in
-          1) GHCTARBALL="ghc-8.0.2-armv7-deb8-linux.tar.xz" ;;
-          2) GHCTARBALL="ghc-8.0.2-i386-centos67-linux.tar.xz" ;;
-          3) GHCTARBALL="ghc-8.0.2-i386-deb7-linux.tar.xz" ;;
-          4) GHCTARBALL="ghc-8.0.2-i386-deb8-linux.tar.xz" ;;
-          5) GHCTARBALL="ghc-8.0.2-i386-portbld-freebsd.tar.xz" ;;
-          6) GHCTARBALL="ghc-8.0.2-i386-unknown-mingw32-win10.tar.xz" ;;
-          7) GHCTARBALL="ghc-8.0.2-i386-unknown-mingw32.tar.xz" ;;
-          8) GHCTARBALL="ghc-8.0.2-i386-unknown-solaris2.tar.xz" ;;
-          9) GHCTARBALL="ghc-8.0.2-powerpc-ibm-aix7.1.0.0.tar.xz" ;;
-          10) GHCTARBALL="ghc-8.0.2-x86_64-apple-darwin.tar.xz" ;;
-          11) GHCTARBALL="ghc-8.0.2-x86_64-centos67-linux.tar.xz" ;;
-          12) GHCTARBALL="ghc-8.0.2-x86_64-deb7-linux.tar.xz" ;;
-          13) GHCTARBALL="ghc-8.0.2-x86_64-deb8-linux.tar.xz" ;;
-          14) GHCTARBALL="ghc-8.0.2-x86_64-portbld-freebsd.tar.xz" ;;
+          1) GHCTARBALL="ghc-8.0.2-armv7-deb8-linux.tar.xz"              ;;
+          2) GHCTARBALL="ghc-8.0.2-i386-centos67-linux.tar.xz"           ;;
+          3) GHCTARBALL="ghc-8.0.2-i386-deb7-linux.tar.xz"               ;;
+          4) GHCTARBALL="ghc-8.0.2-i386-deb8-linux.tar.xz"               ;;
+          5) GHCTARBALL="ghc-8.0.2-i386-portbld-freebsd.tar.xz"          ;;
+          6) GHCTARBALL="ghc-8.0.2-i386-unknown-mingw32-win10.tar.xz"    ;;
+          7) GHCTARBALL="ghc-8.0.2-i386-unknown-mingw32.tar.xz"          ;;
+          8) GHCTARBALL="ghc-8.0.2-i386-unknown-solaris2.tar.xz"         ;;
+          9) GHCTARBALL="ghc-8.0.2-powerpc-ibm-aix7.1.0.0.tar.xz"        ;;
+          10) GHCTARBALL="ghc-8.0.2-x86_64-apple-darwin.tar.xz"          ;;
+          11) GHCTARBALL="ghc-8.0.2-x86_64-centos67-linux.tar.xz"        ;;
+          12) GHCTARBALL="ghc-8.0.2-x86_64-deb7-linux.tar.xz"            ;;
+          13) GHCTARBALL="ghc-8.0.2-x86_64-deb8-linux.tar.xz"            ;;
+          14) GHCTARBALL="ghc-8.0.2-x86_64-portbld-freebsd.tar.xz"       ;;
           15) GHCTARBALL="ghc-8.0.2-x86_64-unknown-mingw32-win10.tar.xz" ;;
-          16) GHCTARBALL="ghc-8.0.2-x86_64-unknown-mingw32.tar.xz" ;;
-          17) GHCTARBALL="ghc-8.0.2-x86_64-unknown-openbsd.tar.xz" ;;
-          *) exit 1 ;;
+          16) GHCTARBALL="ghc-8.0.2-x86_64-unknown-mingw32.tar.xz"       ;;
+          17) GHCTARBALL="ghc-8.0.2-x86_64-unknown-openbsd.tar.xz"       ;;
+          *) exit 1                                                      ;;
         esac
       fi
       ;;
@@ -454,22 +463,22 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
         echo ""
         read -r -p "> " INPUT
         case "$INPUT" in
-          1) GHCTARBALL="ghc-8.2.1-aarch64-deb8-linux.tar.xz" ;;
-          2) GHCTARBALL="ghc-8.2.1-armv7-deb8-linux.tar.xz" ;;
-          3) GHCTARBALL="ghc-8.2.1-i386-deb7-linux.tar.xz" ;;
-          4) GHCTARBALL="ghc-8.2.1-i386-deb8-linux.tar.xz" ;;
-          5) GHCTARBALL="ghc-8.2.1-i386-unknown-mingw32.tar.xz" ;;
-          6) GHCTARBALL="ghc-8.2.1-x86_64-apple-darwin.tar.xz" ;;
-          7) GHCTARBALL="ghc-8.2.1-x86_64-centos67-linux.tar.xz" ;;
-          8) GHCTARBALL="ghc-8.2.1-x86_64-deb7-linux.tar.xz" ;;
-          9) GHCTARBALL="ghc-8.2.1-x86_64-deb8-linux-dwarf.tar.xz" ;;
-          10) GHCTARBALL="ghc-8.2.1-x86_64-deb8-linux.tar.xz" ;;
-          11) GHCTARBALL="ghc-8.2.1-x86_64-openbsd60-openbsd.tar.xz" ;;
-          12) GHCTARBALL="ghc-8.2.1-x86_64-openbsd61-openbsd.tar.xz" ;;
+          1) GHCTARBALL="ghc-8.2.1-aarch64-deb8-linux.tar.xz"          ;;
+          2) GHCTARBALL="ghc-8.2.1-armv7-deb8-linux.tar.xz"            ;;
+          3) GHCTARBALL="ghc-8.2.1-i386-deb7-linux.tar.xz"             ;;
+          4) GHCTARBALL="ghc-8.2.1-i386-deb8-linux.tar.xz"             ;;
+          5) GHCTARBALL="ghc-8.2.1-i386-unknown-mingw32.tar.xz"        ;;
+          6) GHCTARBALL="ghc-8.2.1-x86_64-apple-darwin.tar.xz"         ;;
+          7) GHCTARBALL="ghc-8.2.1-x86_64-centos67-linux.tar.xz"       ;;
+          8) GHCTARBALL="ghc-8.2.1-x86_64-deb7-linux.tar.xz"           ;;
+          9) GHCTARBALL="ghc-8.2.1-x86_64-deb8-linux-dwarf.tar.xz"     ;;
+          10) GHCTARBALL="ghc-8.2.1-x86_64-deb8-linux.tar.xz"          ;;
+          11) GHCTARBALL="ghc-8.2.1-x86_64-openbsd60-openbsd.tar.xz"   ;;
+          12) GHCTARBALL="ghc-8.2.1-x86_64-openbsd61-openbsd.tar.xz"   ;;
           13) GHCTARBALL="ghc-8.2.1-x86_64-portbld10_3-freebsd.tar.xz" ;;
-          14) GHCTARBALL="ghc-8.2.1-x86_64-portbld11-freebsd.tar.xz" ;;
-          15) GHCTARBALL="ghc-8.2.1-x86_64-unknown-mingw32.tar.xz" ;;
-          *) exit 1 ;;
+          14) GHCTARBALL="ghc-8.2.1-x86_64-portbld11-freebsd.tar.xz"   ;;
+          15) GHCTARBALL="ghc-8.2.1-x86_64-unknown-mingw32.tar.xz"     ;;
+          *) exit 1                                                    ;;
         esac
       fi
       ;;
@@ -537,22 +546,22 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
         echo ""
         read -r -p "> " INPUT
         case "$INPUT" in
-          1) GHCTARBALL="ghc-8.2.2-aarch64-deb8-linux.tar.xz" ;;
-          2) GHCTARBALL="ghc-8.2.2-armv7-deb8-linux.tar.xz" ;;
-          3) GHCTARBALL="ghc-8.2.2-i386-deb7-linux.tar.xz" ;;
-          4) GHCTARBALL="ghc-8.2.2-i386-deb8-linux.tar.xz" ;;
-          5) GHCTARBALL="ghc-8.2.2-i386-unknown-mingw32.tar.xz" ;;
-          6) GHCTARBALL="ghc-8.2.2-powerpc-ibm-aix7.1.0.0.tar.xz" ;;
-          7) GHCTARBALL="ghc-8.2.2-x86_64-apple-darwin.tar.xz" ;;
-          8) GHCTARBALL="ghc-8.2.2-x86_64-centos67-linux.tar.xz" ;;
-          9) GHCTARBALL="ghc-8.2.2-x86_64-deb7-linux.tar.xz" ;;
-          10) GHCTARBALL="ghc-8.2.2-x86_64-deb8-linux-dwarf.tar.xz" ;;
-          11) GHCTARBALL="ghc-8.2.2-x86_64-deb8-linux.tar.xz" ;;
+          1) GHCTARBALL="ghc-8.2.2-aarch64-deb8-linux.tar.xz"          ;;
+          2) GHCTARBALL="ghc-8.2.2-armv7-deb8-linux.tar.xz"            ;;
+          3) GHCTARBALL="ghc-8.2.2-i386-deb7-linux.tar.xz"             ;;
+          4) GHCTARBALL="ghc-8.2.2-i386-deb8-linux.tar.xz"             ;;
+          5) GHCTARBALL="ghc-8.2.2-i386-unknown-mingw32.tar.xz"        ;;
+          6) GHCTARBALL="ghc-8.2.2-powerpc-ibm-aix7.1.0.0.tar.xz"      ;;
+          7) GHCTARBALL="ghc-8.2.2-x86_64-apple-darwin.tar.xz"         ;;
+          8) GHCTARBALL="ghc-8.2.2-x86_64-centos67-linux.tar.xz"       ;;
+          9) GHCTARBALL="ghc-8.2.2-x86_64-deb7-linux.tar.xz"           ;;
+          10) GHCTARBALL="ghc-8.2.2-x86_64-deb8-linux-dwarf.tar.xz"    ;;
+          11) GHCTARBALL="ghc-8.2.2-x86_64-deb8-linux.tar.xz"          ;;
           12) GHCTARBALL="ghc-8.2.2-x86_64-portbld10_3-freebsd.tar.xz" ;;
-          13) GHCTARBALL="ghc-8.2.2-x86_64-portbld11-freebsd.tar.xz" ;;
-          14) GHCTARBALL="ghc-8.2.2-x86_64-unknown-linux.tar.xz" ;;
-          15) GHCTARBALL="ghc-8.2.2-x86_64-unknown-mingw32.tar.xz" ;;
-          *) exit 1 ;;
+          13) GHCTARBALL="ghc-8.2.2-x86_64-portbld11-freebsd.tar.xz"   ;;
+          14) GHCTARBALL="ghc-8.2.2-x86_64-unknown-linux.tar.xz"       ;;
+          15) GHCTARBALL="ghc-8.2.2-x86_64-unknown-mingw32.tar.xz"     ;;
+          *) exit 1                                                    ;;
         esac
       fi
       ;;
@@ -589,16 +598,16 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
         echo ""
         read -r -p "> " INPUT
         case "$INPUT" in
-          1) GHCTARBALL="ghc-8.4.1-aarch64-deb8-linux.tar.xz" ;;
-          2) GHCTARBALL="ghc-8.4.1-i386-deb8-linux.tar.xz" ;;
-          3) GHCTARBALL="ghc-8.4.1-i386-unknown-mingw32.tar.xz" ;;
-          4) GHCTARBALL="ghc-8.4.1-x86_64-apple-darwin.tar.xz" ;;
-          5) GHCTARBALL="ghc-8.4.1-x86_64-deb8-linux-dwarf.tar.xz" ;;
-          6) GHCTARBALL="ghc-8.4.1-x86_64-deb8-linux.tar.xz" ;;
-          7) GHCTARBALL="ghc-8.4.1-x86_64-fedora27-linux.tar.xz" ;;
+          1) GHCTARBALL="ghc-8.4.1-aarch64-deb8-linux.tar.xz"       ;;
+          2) GHCTARBALL="ghc-8.4.1-i386-deb8-linux.tar.xz"          ;;
+          3) GHCTARBALL="ghc-8.4.1-i386-unknown-mingw32.tar.xz"     ;;
+          4) GHCTARBALL="ghc-8.4.1-x86_64-apple-darwin.tar.xz"      ;;
+          5) GHCTARBALL="ghc-8.4.1-x86_64-deb8-linux-dwarf.tar.xz"  ;;
+          6) GHCTARBALL="ghc-8.4.1-x86_64-deb8-linux.tar.xz"        ;;
+          7) GHCTARBALL="ghc-8.4.1-x86_64-fedora27-linux.tar.xz"    ;;
           8) GHCTARBALL="ghc-8.4.1-x86_64-portbld11-freebsd.tar.xz" ;;
-          9) GHCTARBALL="ghc-8.4.1-x86_64-unknown-mingw32.tar.xz" ;;
-          *) exit 1 ;;
+          9) GHCTARBALL="ghc-8.4.1-x86_64-unknown-mingw32.tar.xz"   ;;
+          *) exit 1                                                 ;;
         esac
       fi
       ;;
@@ -620,20 +629,45 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
       echo ""
       read -r -p "> " INPUT
         case "$INPUT" in
-          1)  GHCTARBALL="ghc-8.4.2-x86_64-deb8-linux.tar.xz" ;;
-          2)  GHCTARBALL="ghc-8.4.2-i386-unknown-mingw32.tar.xz" ;;
-          3)  GHCTARBALL="ghc-8.4.2-i386-deb8-linux.tar.xz" ;;
-          4)  GHCTARBALL="ghc-8.4.2-x86_64-deb9-linux.tar.xz" ;;
-          5)  GHCTARBALL="ghc-8.4.2-x86_64-fedora27-linux.tar.xz" ;;
-          6)  GHCTARBALL="ghc-8.4.2-aarch64-deb8-linux.tar.xz" ;;
-          7)  GHCTARBALL="ghc-8.4.2-x86_64-unknown-mingw32.tar.xz" ;;
-          8)  GHCTARBALL="ghc-8.4.2-x86_64-portbld-freebsd.tar.xz" ;;
+          1)  GHCTARBALL="ghc-8.4.2-x86_64-deb8-linux.tar.xz"       ;;
+          2)  GHCTARBALL="ghc-8.4.2-i386-unknown-mingw32.tar.xz"    ;;
+          3)  GHCTARBALL="ghc-8.4.2-i386-deb8-linux.tar.xz"         ;;
+          4)  GHCTARBALL="ghc-8.4.2-x86_64-deb9-linux.tar.xz"       ;;
+          5)  GHCTARBALL="ghc-8.4.2-x86_64-fedora27-linux.tar.xz"   ;;
+          6)  GHCTARBALL="ghc-8.4.2-aarch64-deb8-linux.tar.xz"      ;;
+          7)  GHCTARBALL="ghc-8.4.2-x86_64-unknown-mingw32.tar.xz"  ;;
+          8)  GHCTARBALL="ghc-8.4.2-x86_64-portbld-freebsd.tar.xz"  ;;
           9)  GHCTARBALL="ghc-8.4.2-x86_64-deb8-linux-dwarf.tar.xz" ;;
-          10) GHCTARBALL="ghc-8.4.2-x86_64-apple-darwin.tar.xz" ;;
-          11) GHCTARBALL="ghc-8.4.2-x86_64-centos67-linux.tar.xz" ;;
-          *) exit 1 ;;
+          10) GHCTARBALL="ghc-8.4.2-x86_64-apple-darwin.tar.xz"     ;;
+          11) GHCTARBALL="ghc-8.4.2-x86_64-centos67-linux.tar.xz"   ;;
+          *) exit 1                                                 ;;
         esac
       ;;
+
+    8.4.3)
+      echo "(I don't know about this machine, please file an issue.)"
+      echo ""
+      echo "1) ghc-8.4.3-i386-deb8-linux.tar.xz"
+      echo "2) ghc-8.4.3-i386-unknown-mingw32.tar.xz"
+      echo "3) ghc-8.4.3-x86_64-apple-darwin.tar.xz"
+      echo "4) ghc-8.4.3-x86_64-deb8-linux-dwarf.tar.xz"
+      echo "5) ghc-8.4.3-x86_64-deb8-linux.tar.xz"
+      echo "6) ghc-8.4.3-x86_64-deb9-linux.tar.xz"
+      echo "7) ghc-8.4.3-x86_64-unknown-mingw32.tar.xz"
+      echo ""
+      read -r -p "> " INPUT
+        case "$INPUT" in
+          1) GHCTARBALL="ghc-8.4.3-i386-deb8-linux.tar.xz"         ;;
+          2) GHCTARBALL="ghc-8.4.3-i386-unknown-mingw32.tar.xz"    ;;
+          3) GHCTARBALL="ghc-8.4.3-x86_64-apple-darwin.tar.xz"     ;;
+          4) GHCTARBALL="ghc-8.4.3-x86_64-deb8-linux-dwarf.tar.xz" ;;
+          5) GHCTARBALL="ghc-8.4.3-x86_64-deb8-linux.tar.xz"       ;;
+          6) GHCTARBALL="ghc-8.4.3-x86_64-deb9-linux.tar.xz"       ;;
+          7) GHCTARBALL="ghc-8.4.3-x86_64-unknown-mingw32.tar.xz"  ;;
+          *) exit 1                                                ;;
+        esac
+      ;;
+
     *)
       exit 1
       ;;
