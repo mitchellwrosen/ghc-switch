@@ -36,7 +36,6 @@ ghcTarballSha256() {
     ghc-7.6.3-i386-unknown-linux.tar.bz2)             echo "eb9bd2ca86c72c7f2ba9f2301e2ae04c44aa4828cf1180548619aa4c040a7ff0" ;;
     ghc-7.6.3-i386-unknown-mingw32-win10.tar.xz)      echo "98d88a9a281f0bba282624424ca01c493dbffd38bfa8af637dc701904fd3821d" ;;
     ghc-7.6.3-i386-unknown-mingw32.tar.bz2)           echo "6684b47084ebba68dac591eeebe5660e564d4684db7a7eed9428538df90c0dd3" ;;
-    ghc-7.6.3-src.tar.bz2)                            echo "bd43823d31f6b5d0b2ca7b74151a8f98336ab0800be85f45bb591c9c26aac998" ;;
     ghc-7.6.3-x86_64-apple-darwin.tar.bz2)            echo "f7a35bea69b6cae798c5f603471a53b43c4cc5feeeeb71733815db6e0a280945" ;;
     ghc-7.6.3-x86_64-unknown-freebsd.tar.bz2)         echo "a80d564d57f6ad963ef93aac9e746921481635331e4ca1156c8919180af5632b" ;;
     ghc-7.6.3-x86_64-unknown-linux.tar.bz2)           echo "398dd5fa6ed479c075ef9f638ef4fc2cc0fbf994e1b59b54d77c26a8e1e73ca0" ;;
@@ -221,7 +220,6 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
       echo " 3) ghc-7.6.3-i386-unknown-linux.tar.bz2"
       echo " 4) ghc-7.6.3-i386-unknown-mingw32-win10.tar.xz"
       echo " 5) ghc-7.6.3-i386-unknown-mingw32.tar.bz2"
-      echo " 6) ghc-7.6.3-src.tar.bz2"
       echo " 7) ghc-7.6.3-x86_64-apple-darwin.tar.bz2"
       echo " 8) ghc-7.6.3-x86_64-unknown-freebsd.tar.bz2"
       echo " 9) ghc-7.6.3-x86_64-unknown-linux.tar.bz2"
@@ -234,7 +232,6 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
         3) GHCTARBALL="ghc-7.6.3-i386-unknown-linux.tar.bz2"        ;;
         4) GHCTARBALL="ghc-7.6.3-i386-unknown-mingw32-win10.tar.xz" ;;
         5) GHCTARBALL="ghc-7.6.3-i386-unknown-mingw32.tar.bz2"      ;;
-        6) GHCTARBALL="ghc-7.6.3-src.tar.bz2"                       ;;
         7) GHCTARBALL="ghc-7.6.3-x86_64-apple-darwin.tar.bz2"       ;;
         8) GHCTARBALL="ghc-7.6.3-x86_64-unknown-freebsd.tar.bz2"    ;;
         9) GHCTARBALL="ghc-7.6.3-x86_64-unknown-linux.tar.bz2"      ;;
@@ -242,6 +239,7 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
         *) exit 1                                                   ;;
       esac
       ;;
+
     7.8.4)
       echo "I don't know about this machine, please file an issue."
       echo ""
@@ -253,6 +251,7 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
         *) exit 1 ;;
       esac
       ;;
+
     7.10.3)
       echo "I don't know about this machine, please file an issue."
       echo ""
@@ -264,6 +263,7 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
         *) exit 1 ;;
       esac
       ;;
+
     8.0.1)
       case "$MACHINE" in
         amd64|x86_64)
@@ -345,6 +345,7 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
         esac
       fi
       ;;
+
     8.0.2)
       case "$MACHINE" in
         amd64|x86_64)
@@ -419,6 +420,7 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
         esac
       fi
       ;;
+
     8.2.1)
       case "$MACHINE" in
         amd64|x86_64)
@@ -502,6 +504,7 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
         esac
       fi
       ;;
+
     8.2.2)
       case "$MACHINE" in
         amd64|x86_64)
@@ -585,6 +588,7 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
         esac
       fi
       ;;
+
     8.4.1)
       case "$MACHINE" in
         amd64|x86_64)
