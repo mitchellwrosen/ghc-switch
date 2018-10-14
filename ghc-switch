@@ -146,6 +146,18 @@ ghcTarballSha256() {
     ghc-8.4.3-x86_64-deb9-linux.tar.xz)               echo "2e4f53afb872ad9c640f31aea283b3ff4c5028b65808a1920739900aef7d15c9" ;;
     ghc-8.4.3-x86_64-unknown-mingw32.tar.xz)          echo "8a83cfbf9ae84de0443c39c93b931693bdf2a6d4bf163ffb41855f80f4bf883e" ;;
 
+    ghc-8.4.4-i386-deb8-linux.tar.xz)                 echo "678bafaabea6af70ba71ccf0210bb437f9f5591ec28ac1cbbbd5f7aa6894e450" ;;
+    ghc-8.4.4-i386-unknown-mingw32.tar.xz)            echo "4e6a3ce4df602cdbf0f6780e16b2d727dae9e3517a972bc81ea0f657f1e6dccf" ;;
+    ghc-8.4.4-testsuite.tar.xz)                       echo "46babc7629c9bce58204d6425e3726e35aa8dc58a8c4a7e44dc81ed975721469" ;;
+    ghc-8.4.4-x86_64-apple-darwin.tar.xz)             echo "28dc89ebd231335337c656f4c5ead2ae2a1acc166aafe74a14f084393c5ef03a" ;;
+    ghc-8.4.4-x86_64-centos70-linux.tar.xz)           echo "83a96650f5a92b1e4d7651d256d6438624342d40e780e68125033435a54cd674" ;;
+    ghc-8.4.4-x86_64-deb8-linux.tar.xz)               echo "4c2a8857f76b7f3e34ecba0b51015d5cb8b767fe5377a7ec477abde10705ab1a" ;;
+    ghc-8.4.4-x86_64-deb9-linux-dwarf.tar.xz)         echo "f9cac6e402c71d7251f2e22f412fb4abd72c64f34481a1e548cd7f6ff2352a07" ;;
+    ghc-8.4.4-x86_64-deb9-linux.tar.xz)               echo "47c80a32d8f02838a2401414c94ba260d1fe82b7d090479994522242c767cc83" ;;
+    ghc-8.4.4-x86_64-fedora27-linux.tar.xz)           echo "8ab2befddc14d1434d0aad0c5d3c7e0c2b78ff84caa3429fa62527bfc6b86095" ;;
+    ghc-8.4.4-x86_64-portbld-freebsd11.tar.xz)        echo "44fbd142d1c355d6110595c59c760e2c73866ff9259ec85ebf814edb244d1940" ;;
+    ghc-8.4.4-x86_64-unknown-mingw32.tar.xz)          echo "da29dbb0f1199611c7d5bb7b0dd6a7426ca98f67dfd6da1526b033cd3830dc05" ;;
+
     ghc-8.6.1-x86_64-deb8-linux.tar.xz)               echo "6d8784401b7dd80c90fa17306ec0539920e3987399a2c7ef247989e53197dc42" ;;
     ghc-8.6.1-x86_64-fedora27-linux.tar.xz)           echo "da903fbcf11ee6c977a8b7dac3f04dbc098d674def587880b6624b8f32588beb" ;;
     ghc-8.6.1-i386-deb8-linux.tar.xz)                 echo "83573af96e3dec8f67c1a844512f92cbf7d51ae7ceca53d948fc2a3300abd05c" ;;
@@ -184,6 +196,7 @@ case "$GHCVER" in
   "8.4.1") ;;
   "8.4.2") ;;
   "8.4.3") ;;
+  "8.4.4") ;;
   "8.6.1") ;;
   *)
     echo "Available GHC versions:"
@@ -197,6 +210,7 @@ case "$GHCVER" in
     echo "8.4.1"
     echo "8.4.2"
     echo "8.4.3"
+    echo "8.4.4"
     echo "8.6.1"
     exit 1
     ;;
@@ -691,6 +705,38 @@ if [ ! -d "$HOME/.ghc-switch/ghc-$GHCVER" ]; then
           6) GHCTARBALL="ghc-8.4.3-x86_64-deb9-linux.tar.xz"       ;;
           7) GHCTARBALL="ghc-8.4.3-x86_64-unknown-mingw32.tar.xz"  ;;
           *) exit 1                                                ;;
+        esac
+      ;;
+
+    8.4.4)
+      echo "I don't know about this machine, please file an issue."
+      echo ""
+      echo "1) ghc-8.4.4-i386-deb8-linux.tar.xz"
+      echo "2) ghc-8.4.4-i386-unknown-mingw32.tar.xz"
+      echo "3) ghc-8.4.4-testsuite.tar.xz"
+      echo "4) ghc-8.4.4-x86_64-apple-darwin.tar.xz"
+      echo "5) ghc-8.4.4-x86_64-centos70-linux.tar.xz"
+      echo "6) ghc-8.4.4-x86_64-deb8-linux.tar.xz"
+      echo "7) ghc-8.4.4-x86_64-deb9-linux-dwarf.tar.xz"
+      echo "8) ghc-8.4.4-x86_64-deb9-linux.tar.xz"
+      echo "9) ghc-8.4.4-x86_64-fedora27-linux.tar.xz"
+      echo "10) ghc-8.4.4-x86_64-portbld-freebsd11.tar.xz"
+      echo "11) ghc-8.4.4-x86_64-unknown-mingw32.tar.xz"
+      echo ""
+      read -r -p "> " INPUT
+        case "$INPUT" in
+          1) GHCTARBALL="ghc-8.4.4-i386-deb8-linux.tar.xz"           ;;
+          2) GHCTARBALL="ghc-8.4.4-i386-unknown-mingw32.tar.xz"      ;;
+          3) GHCTARBALL="ghc-8.4.4-testsuite.tar.xz"                 ;;
+          4) GHCTARBALL="ghc-8.4.4-x86_64-apple-darwin.tar.xz"       ;;
+          5) GHCTARBALL="ghc-8.4.4-x86_64-centos70-linux.tar.xz"     ;;
+          6) GHCTARBALL="ghc-8.4.4-x86_64-deb8-linux.tar.xz"         ;;
+          7) GHCTARBALL="ghc-8.4.4-x86_64-deb9-linux-dwarf.tar.xz"   ;;
+          8) GHCTARBALL="ghc-8.4.4-x86_64-deb9-linux.tar.xz"         ;;
+          9) GHCTARBALL="ghc-8.4.4-x86_64-fedora27-linux.tar.xz"     ;;
+          10) GHCTARBALL="ghc-8.4.4-x86_64-portbld-freebsd11.tar.xz" ;;
+          11) GHCTARBALL="ghc-8.4.4-x86_64-unknown-mingw32.tar.xz"   ;;
+          *) exit 1                                                  ;;
         esac
       ;;
 
