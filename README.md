@@ -1,3 +1,5 @@
+Deprecated in favor of https://github.com/haskell/ghcup
+
 ## ghc-switch
 
 `ghc-switch` manages the installation of multiple versions of `ghc` and related binaries. Specifically, it:
